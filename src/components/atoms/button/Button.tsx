@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 import classnames from 'classnames';
 
-type ButtonProps = {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   type?: 'submit';
   loading?: boolean;
-} & React.ButtonHTMLAttributes<HTMLButtonElement>;
+}
 
-const Button = ({ children, type, loading, ...props }: ButtonProps) => (
-  <button {...props} type={type || 'button'} className={classnames('btn', { loading })}>
+const Button = ({ children, className, type, loading, ...props }: ButtonProps) => (
+  <button type={type || 'button'} className={classnames(className, 'btn', { loading })} {...props}>
     {children}
   </button>
 );
