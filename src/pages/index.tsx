@@ -16,6 +16,7 @@ export default function Home() {
         <h1 className="text-3xl font-bold">
           Hello world!
         </h1>
+        <button className="btn">Hello daisyUI</button>
       </main>
     </>
   )
