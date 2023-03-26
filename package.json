@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "lint-staged": {
-    "src/**/*.{ts,json,md}": [
+    "src/**/*.{ts,tsx,json,md}": [
       "prettier --write",
       "git add"
     ]
