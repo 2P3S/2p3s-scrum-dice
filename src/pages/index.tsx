@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { Noto_Sans_KR, Lato } from 'next/font/google';
 
 // Todo: atomic 디자인 패턴 실험중에만 하기의 컴포넌트를 추가한다.
-import Button from '@components/atoms/button/Button';
+import Button from '@/components/atoms/button/Button';
 
 const notoSansKr = Noto_Sans_KR({
   // preload: true, 기본값
