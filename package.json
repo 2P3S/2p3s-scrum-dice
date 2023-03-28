@@ -13,7 +13,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "docker:build": "DOCKER_BUILDKIT=1 docker build -t scrum-dice --secret id=npm,src=./.npmrc .",
+    "docker:run": "docker run --env-file=.env --rm --name scrum-dice -p 3000:3000 -d scrum-dice",
+    "docker:stop": "docker stop scrum-dice"
   },
   "dependencies": {
     "@types/node": "18.15.10",
