@@ -77,7 +77,7 @@ UI 컴포넌트를 분해하여 재사용 가능한 최소 단위인 `Atoms` 으
 
 ### Atoms
 
-- `Anchor``
+- `Anchor`
 - `Paragraph`
 - `Input`
 - `Card`
