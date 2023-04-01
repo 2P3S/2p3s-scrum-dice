@@ -1,14 +1,13 @@
 # 아토믹 디자인 패턴으로 구성된 Component Structure
 
-- [아토믹 디자인 패턴으로 구성된 Component Structure](#아토믹-디자인-패턴으로-구성된-component-structure)
-  - [컴포넌트 분리 기준](#컴포넌트-분리-기준)
-    - [Atoms](#atoms)
-    - [Molecules](#molecules)
-    - [Organisms](#organisms)
-    - [Templates](#templates)
-    - [Pages](#pages)
-  - [상태관리](#상태관리)
-  - [폴더구조](#폴더구조)
+- [컴포넌트 분리 기준](#컴포넌트-분리-기준)
+  - [Atoms](#atoms)
+  - [Molecules](#molecules)
+  - [Organisms](#organisms)
+  - [Templates](#templates)
+  - [Pages](#pages)
+- [상태관리](#상태관리)
+- [폴더구조](#폴더구조)
 
 ## 컴포넌트 분리 기준
 
