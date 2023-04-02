@@ -1,15 +1,18 @@
-import React from 'react';
+import { ButtonHTMLAttributes } from 'react';
 import classnames from 'classnames';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   type?: 'submit';
   loading?: boolean;
-}
+  state?: 'info' | 'success' | 'warning' | 'error';
+};
 
-const Button = ({ children, className, type, loading, ...props }: ButtonProps) => (
-  <button type={type || 'button'} className={classnames(className, 'btn', { loading })} {...props}>
+export const Button = ({ children, className, type, loading, state, ...props }: ButtonProps) => (
+  <button
+    type={type || 'button'}
+    className={classnames(className, 'btn', { [`btn-${state}`]: state }, { loading })}
+    {...props}
+  >
     {children}
   </button>
 );
-
-export default Button;
