@@ -17,7 +17,7 @@ export const LinkButton = ({
   target = '_self',
   ...props
 }: LinkButtonProps): ReactElement => (
-  <Link href={href} target={target} className={classnames(className, 'btn')} {...props}>
+  <Link href={href} target={target} className={classnames(className, 'btn')} role="button" {...props}>
     {children}
   </Link>
 );
