@@ -1,33 +1,36 @@
-FROM node:18.14.2-alpine AS build-env
+FROM node:18-alpine AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-RUN npm install --location=global pnpm@7
+COPY package.json package-lock.json ./
+RUN  npm install --production
 
-# for pnpm install --frozen-lockfile
-COPY .npmrc ./
-COPY package.json ./
-COPY pnpm-lock.yaml ./
+FROM node:18-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 
-# docker build --build-arg BUILDKIT_INLINE_CACHE=1 --secret id=npm,src=/tmp/.npmrc
-RUN --mount=type=secret,id=npm,target=/app/.npmrc pnpm install --frozen-lockfile
-
-# for build
-COPY . /app
-
-# https://nextjs.org/telemetry
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN pnpm run build
+RUN npm run build
 
-FROM gcr.io/distroless/nodejs:16
-##FROM gcr.io/distroless/nodejs:16-debug
-USER nonroot
+FROM node:18-alpine AS runner
 WORKDIR /app
-COPY --chown=nonroot:nonroot --from=build-env /app/next.config.js ./
-COPY --chown=nonroot:nonroot --from=build-env /app/public ./public
-COPY --chown=nonroot:nonroot --from=build-env /app/.next ./.next
-COPY --chown=nonroot:nonroot --from=build-env /app/node_modules ./node_modules
+
+ENV NODE_ENV production
+ENV NEXT_TELEMETRY_DISABLED 1
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+
+USER nextjs
 
 EXPOSE 3000
 
-CMD ["./node_modules/next/dist/bin/next", "start"]
+ENV PORT 3000
+
+CMD ["npm", "start"]
