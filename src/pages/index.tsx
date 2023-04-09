@@ -6,6 +6,7 @@ import { Noto_Sans_KR, Lato } from 'next/font/google';
 
 // Todo: atomic 디자인 패턴 실험중에만 하기의 컴포넌트를 추가한다.
 import Button from '@/components/atoms/button/Button';
+import { Paragraph } from '@/components/atoms/paragraph';
 
 const notoSansKr = Noto_Sans_KR({
   // preload: true, 기본값
@@ -37,6 +38,9 @@ export default function Home() {
         <h3 className="text-3xl">숫자 폰트 테스트</h3>
         <Button className="text-lg">123</Button>
         <Button className="text-lg font-lato">123</Button>
+        <Paragraph size="small">paragraph size = small</Paragraph>
+        <Paragraph size="base">paragraph size = base</Paragraph>
+        <Paragraph size="large">paragraph size = large</Paragraph>
       </main>
     </>
   );
