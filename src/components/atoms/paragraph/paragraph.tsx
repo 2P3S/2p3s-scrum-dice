@@ -1,9 +1,9 @@
-import React from 'react';
+import { HTMLAttributes } from 'react';
 import classnames from 'classnames';
 
-interface ParagraphProps extends React.HTMLAttributes<HTMLParagraphElement> {
+type ParagraphProps = HTMLAttributes<HTMLParagraphElement> & {
   size?: 'small' | 'base' | 'large';
-}
+};
 
 export const Paragraph = ({ children, className, color, size, ...props }: ParagraphProps) => {
   const style = classnames(className, {
