@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import classnames from 'classnames';
 
 import { ButtonProps } from './Button';
@@ -10,27 +10,32 @@ type CountDownButtonProps = ButtonProps & {
 
 export const CountDownButton = ({ children, className, counter, onReset, ...props }: CountDownButtonProps) => {
   const [count, setCount] = useState(counter);
-  const [isActive, setIsActive] = useState(false);
+  const [isCounting, setIsCounting] = useState(false);
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
-
-    if (isActive) {
+    if (isCounting) {
       intervalId = setInterval(() => {
-        setCount(prevCount => prevCount - 1);
+        setCount(prevCount => {
+          if (typeof prevCount === 'string') return prevCount;
+          if (prevCount <= 1) {
+            setIsCounting(false);
+            clearInterval(intervalId);
+          }
+          return prevCount - 1;
+        });
       }, 1000);
     }
-
     return () => clearInterval(intervalId);
-  }, [isActive]);
+  }, [isCounting]);
 
-  const handleButtonClick = () => {
-    setIsActive(prevIsActive => !prevIsActive);
-  };
+  const toggleCounting = useCallback(() => {
+    setIsCounting(prevIsCounting => !prevIsCounting);
+  }, []);
 
   // TODO: 리셋 기능을 어떻게 연결할지 정하기.
   const handleResetClick = () => {
-    setIsActive(false);
+    setIsCounting(false);
     setCount(counter);
     onReset?.();
   };
@@ -47,7 +52,7 @@ export const CountDownButton = ({ children, className, counter, onReset, ...prop
   const buttonClassName = classnames(className, 'btn');
 
   return (
-    <button className={buttonClassName} onClick={handleButtonClick} {...props}>
+    <button className={buttonClassName} onClick={toggleCounting} {...props}>
       {formatTime(count)}
       {children}
     </button>
