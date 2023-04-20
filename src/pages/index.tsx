@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { Noto_Sans_KR, Lato } from 'next/font/google';
 
 // Todo: atomic 디자인 패턴 실험중에만 하기의 컴포넌트를 추가한다.
-import { Card } from '@/components/atoms/card';
+import { Title } from '@/components/atoms/title';
 
 const notoSansKr = Noto_Sans_KR({
   // preload: true, 기본값
@@ -29,20 +29,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={classNames(notoSansKr.className, lato.variable)}>
-        <div className="mockup-window border bg-base-300 m-8">
-          <div className="flex space-x-2 justify-center px-4 py-16 bg-base-200">
-            <Card state="openedMe">0</Card>
-            <Card state="selectable">1</Card>
-            <Card state="selected">2</Card>
-            <Card state="selectable">3</Card>
-            <Card state="selectable">5</Card>
-            <Card state="selectable">8</Card>
-            <Card state="selectable">13</Card>
-            <Card state="selectable">21</Card>
-            <Card state="openedOther">23</Card>
-            <Card state="openedOther">25</Card>
-          </div>
-        </div>
+        <Title headingLevel="h1" emoji="🦫">
+          h1 타이틀 테스트
+        </Title>
+        <Title headingLevel="h2">h2 타이틀 테스트</Title>
+        <Title headingLevel="h3">h3 타이틀 테스트</Title>
       </main>
     </>
   );
