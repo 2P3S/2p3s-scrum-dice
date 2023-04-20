@@ -5,7 +5,7 @@ type ParagraphProps = HTMLAttributes<HTMLParagraphElement> & {
   size?: 'small' | 'base' | 'large';
 };
 
-export const Paragraph = ({ children, className, color, size, ...props }: ParagraphProps) => {
+export const Paragraph = ({ children, className, size, ...props }: ParagraphProps) => {
   const style = classnames(className, {
     'text-sm': size === 'small',
     'text-base': !size || size === 'base',
