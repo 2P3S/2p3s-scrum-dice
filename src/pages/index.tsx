@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { Noto_Sans_KR, Lato } from 'next/font/google';
 
 // Todo: atomic 디자인 패턴 실험중에만 하기의 컴포넌트를 추가한다.
-import { Button, LinkButton } from '@/components/atoms/button';
+import { CountDownButton } from '@/components/atoms/button';
 
 const notoSansKr = Noto_Sans_KR({
   // preload: true, 기본값
@@ -29,8 +29,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={classNames(notoSansKr.className, lato.variable)}>
-        <Button state="info">Success</Button>
-        <LinkButton href="#">link button</LinkButton>
+        <CountDownButton counter={90} />
+        <CountDownButton counter={300} />
       </main>
     </>
   );
