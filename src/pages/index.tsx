@@ -4,9 +4,6 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import { Noto_Sans_KR, Lato } from 'next/font/google';
 
-// Todo: atomic 디자인 패턴 실험중에만 하기의 컴포넌트를 추가한다.
-import { Input } from '@/components/atoms/input';
-
 const notoSansKr = Noto_Sans_KR({
   // preload: true, 기본값
   subsets: ['latin'], // 또는 preload: false
@@ -28,14 +25,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={classNames(notoSansKr.className, lato.variable)}>
-        <Input />
-        <Input value="😁 게스트 이름을 입력해주세요" className="w-full" />
-        <Input disabled />
-        <Input type="email" />
-        <Input type="password" />
-        <Input label="atomic" id="atomic" />
-      </main>
+      <main className={classNames(notoSansKr.className, lato.variable)}　/>
     </>
   );
 }
