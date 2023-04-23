@@ -1,7 +1,7 @@
 import { HTMLAttributes } from 'react';
 import classnames from 'classnames';
 
-type TitleProps = HTMLAttributes<HTMLHeadingElement> & {
+export type TitleProps = HTMLAttributes<HTMLHeadingElement> & {
   headingLevel: 'h1' | 'h2' | 'h3';
   emoji?: string;
 };
