@@ -3,6 +3,7 @@ import Head from 'next/head';
 // styles
 import classNames from 'classnames';
 import { Noto_Sans_KR, Lato } from 'next/font/google';
+rom '@/components/atoms/button';
 
 const notoSansKr = Noto_Sans_KR({
   // preload: true, 기본값
@@ -25,7 +26,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={classNames(notoSansKr.className, lato.variable)} />
+      <main className={classNames(notoSansKr.className, lato.variable)}>
+      </main>
     </>
   );
 }
