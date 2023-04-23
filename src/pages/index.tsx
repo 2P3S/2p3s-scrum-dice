@@ -4,9 +4,6 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import { Noto_Sans_KR, Lato } from 'next/font/google';
 
-// Todo: atomic 디자인 패턴 실험중에만 하기의 컴포넌트를 추가한다.
-import { CountDownButton } from '@/components/atoms/button';
-
 const notoSansKr = Noto_Sans_KR({
   // preload: true, 기본값
   subsets: ['latin'], // 또는 preload: false
@@ -28,10 +25,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={classNames(notoSansKr.className, lato.variable)}>
-        <CountDownButton counter={90} />
-        <CountDownButton counter={300} />
-      </main>
+      <main className={classNames(notoSansKr.className, lato.variable)}></main>
     </>
   );
 }
