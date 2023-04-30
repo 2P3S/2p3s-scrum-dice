@@ -1,3 +1,4 @@
+import { Paragraph } from '@/components/atoms/paragraph';
 import Head from 'next/head';
 import Link from 'next/link';
 
@@ -10,8 +11,13 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <Link href="/room">🎉 플래닝 포커 방 생성하기</Link>
+      <main className="m-4">
+        <Paragraph size="large">
+          <Link href="/login">👀 게스트로 로그인하기</Link>
+        </Paragraph>
+        <Paragraph size="large">
+          <Link href="/room">🎉 플래닝 포커 방 생성하기</Link>
+        </Paragraph>
       </main>
     </>
   );
