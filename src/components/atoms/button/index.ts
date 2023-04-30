@@ -1,3 +1,3 @@
-export { Button } from './Button';
-export { LinkButton } from './LinkButton';
-export { CountDownButton } from './CountDownButton';
+export * from './Button';
+export * from './LinkButton';
+export * from './CountDownButton';

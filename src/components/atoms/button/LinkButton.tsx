@@ -4,7 +4,7 @@ import classnames from 'classnames';
 
 import { ButtonProps } from './Button';
 
-type LinkButtonProps = ButtonProps &
+export type LinkButtonProps = ButtonProps &
   Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'target' | 'href'> & {
     href: string;
     target?: '_blank' | '_self';

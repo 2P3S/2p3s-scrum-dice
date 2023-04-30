@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import { ButtonProps } from './Button';
 
-type CountDownButtonProps = ButtonProps & {
+export type CountDownButtonProps = ButtonProps & {
   counter: number;
   onReset?: () => void;
 };
@@ -11,6 +11,10 @@ type CountDownButtonProps = ButtonProps & {
 export const CountDownButton = ({ children, className, counter, onReset, ...props }: CountDownButtonProps) => {
   const [count, setCount] = useState(counter);
   const [isCounting, setIsCounting] = useState(false);
+
+  useEffect(() => {
+    setCount(counter);
+  }, [counter]);
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;

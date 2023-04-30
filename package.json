@@ -17,9 +17,11 @@
     "docker:build": "DOCKER_BUILDKIT=1 docker build -t scrum-dice --secret id=npm,src=./.npmrc .",
     "docker:run": "docker run --env-file=.env --rm --name scrum-dice -p 3000:3000 -d scrum-dice",
     "docker:stop": "docker stop scrum-dice",
-    "docker:dev": "docker-compose rm -fsv && COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose build && docker-compose up && docker-compose rm -fsv"
+    "docker:dev": "docker-compose rm -fsv && COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose build && docker-compose up && docker-compose rm -fsv",
+    "story": "ladle serve"
   },
   "dependencies": {
+    "@ladle/react": "^2.12.2",
     "@types/node": "18.15.10",
     "@types/react": "18.0.29",
     "@types/react-dom": "18.0.11",
