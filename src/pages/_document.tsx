@@ -1,4 +1,3 @@
-import { Header } from '@/components/templates/Header';
 import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document() {
@@ -6,7 +5,6 @@ export default function Document() {
     <Html lang="kr">
       <Head />
       <body>
-        <Header />
         <Main />
         <NextScript />
       </body>

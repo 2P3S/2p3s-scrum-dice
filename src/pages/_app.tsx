@@ -2,6 +2,7 @@ import { Noto_Sans_KR, Lato } from 'next/font/google';
 import type { AppProps } from 'next/app';
 
 import '@/styles/globals.css';
+import { Header } from '@/components/templates/Header';
 
 const notoSansKr = Noto_Sans_KR({
   // preload: true, 기본값
@@ -25,6 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
           }
         `}
       </style>
+      <Header />
       <Component {...pageProps} />
     </>
   );
