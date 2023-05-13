@@ -11,21 +11,24 @@ export type Option = {
 
 export type OptionCardProps = {
   option: Option;
+  labelVisibility?: boolean;
 };
 
-export const OptionCard = ({ option }: OptionCardProps) => (
+export const OptionCard = ({ option, labelVisibility = true }: OptionCardProps) => (
   <>
     <button
       className={classnames(
-        'w-20 h-24 rounded-lg text-[64px] shadow-lg',
+        'btn w-20 h-24 rounded-lg text-[64px] shadow-lg border-none hover:-translate-y-4',
         option.class,
         option.selected === false && ' grayscale',
       )}
     >
       {option.emoji}
     </button>
-    <Paragraph size="small" className="mt-2">
-      {option.name}
-    </Paragraph>
+    {labelVisibility && (
+      <Paragraph size="small" className="mt-2">
+        {option.name}
+      </Paragraph>
+    )}
   </>
 );

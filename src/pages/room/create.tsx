@@ -1,5 +1,7 @@
 import { CreateRoom } from '@/components/templates/CreateRoom';
 
-export default function Room() {
+const Create = () => {
   return <CreateRoom />;
-}
+};
+
+export default Create;

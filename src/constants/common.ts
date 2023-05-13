@@ -1,6 +1,14 @@
 export const FIBONACCI_NUMBERS = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
 export const MODIFIED_FIBONACCI_NUMBERS = [0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100];
-export const OPTION_CARDS = [
+
+export type CustomOptionCard = {
+  name: string;
+  emoji: string;
+  class: string;
+  selected: boolean;
+};
+
+export const OPTION_CARDS: CustomOptionCard[] = [
   {
     name: 'Egg Timer',
     emoji: '🐣',

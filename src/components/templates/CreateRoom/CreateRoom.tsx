@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import { Button } from '@/components/atoms/Button';
@@ -12,6 +13,8 @@ import { Card, CardGroup } from '@/components/organisms/CardGroup';
 import { FIBONACCI_NUMBERS, MODIFIED_FIBONACCI_NUMBERS, OPTION_CARDS } from '@/constants/common';
 
 export const CreateRoom = () => {
+  const router = useRouter();
+
   const [roomName, setRoomName] = useState<string>('');
   const [cards, setCards] = useState<Card[]>([
     {
@@ -51,6 +54,7 @@ export const CreateRoom = () => {
       cards.find(card => card.selected),
     );
     console.log('option cards:', options);
+    router.push('room/8743b52063cd84097a65d1633f5c74f5');
   };
 
   return (
