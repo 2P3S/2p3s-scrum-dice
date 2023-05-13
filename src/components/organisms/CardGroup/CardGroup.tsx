@@ -17,7 +17,7 @@ export const CardGroup = (props: CardGroupProps) => {
   return (
     <div
       className={classnames(
-        'p-3 rounded-md grid grid-cols-4 gap-2 place-items-center hover:border hover:border-blue-700',
+        'p-3 rounded-md grid grid-cols-5 gap-2 place-items-center hover:border hover:border-blue-700',
         props.selected && selectedWrapperStyle,
       )}
       onClick={() => props.onCardClick(props.title)}

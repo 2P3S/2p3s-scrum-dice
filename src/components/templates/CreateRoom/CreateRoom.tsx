@@ -77,7 +77,7 @@ export const CreateRoom = () => {
       </section>
       <section>
         <Paragraph className="pb-2">옵션 카드를 사용해봐요</Paragraph>
-        <div className="flex justify-between items-center space-x-3">
+        <div className="flex justify-start items-center space-x-6">
           {options.map((option, i) => (
             <div
               key={option.name}
