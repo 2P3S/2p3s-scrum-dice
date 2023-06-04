@@ -6,9 +6,10 @@ import { ButtonProps } from './Button';
 type CountDownButtonProps = ButtonProps & {
   counter: number;
   onReset?: () => void;
+  isOpen?: boolean;
 };
 
-export const CountDownButton = ({ children, className, counter, onReset, ...props }: CountDownButtonProps) => {
+export const CountDownButton = ({ children, className, counter, isOpen, onReset, ...props }: CountDownButtonProps) => {
   const [count, setCount] = useState(counter);
   const [isCounting, setIsCounting] = useState(false);
 
@@ -29,6 +30,10 @@ export const CountDownButton = ({ children, className, counter, onReset, ...prop
     return () => clearInterval(intervalId);
   }, [isCounting]);
 
+  useEffect(() => {
+    if (isOpen === false) handleResetClick();
+  }, [isOpen]);
+
   const toggleCounting = useCallback(() => {
     setIsCounting(prevIsCounting => !prevIsCounting);
   }, []);
@@ -37,7 +42,6 @@ export const CountDownButton = ({ children, className, counter, onReset, ...prop
   const handleResetClick = () => {
     setIsCounting(false);
     setCount(counter);
-    onReset?.();
   };
 
   const formatTime = (count: number | string): string => {
@@ -53,8 +57,8 @@ export const CountDownButton = ({ children, className, counter, onReset, ...prop
 
   return (
     <button className={buttonClassName} onClick={toggleCounting} {...props}>
+      <span className="mr-2 text-2xl">{children}</span>
       {formatTime(count)}
-      {children}
     </button>
   );
 };

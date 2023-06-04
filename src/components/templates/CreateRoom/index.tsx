@@ -2,12 +2,11 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import { Button } from '@/components/atoms/Button';
-import { Title } from '@/components/atoms/Title';
 import { Input } from '@/components/atoms/input';
+import { Title } from '@/components/atoms/Title';
 import { Paragraph } from '@/components/atoms/paragraph';
 
 import { Option, OptionCard } from '@/components/molecules/OptionCard';
-
 import { Card, CardGroup } from '@/components/organisms/CardGroup';
 
 import { FIBONACCI_NUMBERS, MODIFIED_FIBONACCI_NUMBERS, OPTION_CARDS } from '@/constants/common';
@@ -48,12 +47,7 @@ export const CreateRoom = () => {
   };
 
   const handleCreateRoomClick = () => {
-    console.log('room name:', roomName);
-    console.log(
-      'selected cards:',
-      cards.find(card => card.selected),
-    );
-    console.log('option cards:', options);
+    // TODO: 방 생성 API 추가
     router.push('room/8743b52063cd84097a65d1633f5c74f5');
   };
 
@@ -69,6 +63,7 @@ export const CreateRoom = () => {
         value={roomName}
         onChange={handleRoomNameChange}
       />
+      {/* FIXME: section 태그는 organisms에 분리하기 */}
       <section>
         <Paragraph className="pb-2">기본 카드 묶음을 선택해주세요</Paragraph>
         <div className="flex justify-around space-x-2">
@@ -88,7 +83,7 @@ export const CreateRoom = () => {
               className="flex flex-col justify-center items-center"
               onClick={() => handleOptionCardClick(i)}
             >
-              <OptionCard option={option} />
+              <OptionCard option={option} state="selectable" />
             </div>
           ))}
         </div>
