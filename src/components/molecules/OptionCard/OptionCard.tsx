@@ -19,7 +19,7 @@ export const OptionCard = ({ option }: OptionCardProps) => (
       className={classnames(
         'w-20 h-24 rounded-lg text-[64px] shadow-lg',
         option.class,
-        option.selected === false && 'grayscale blur-sm',
+        option.selected === false && ' grayscale',
       )}
     >
       {option.emoji}

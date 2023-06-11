@@ -1,5 +1,5 @@
-export const FIBONACCI_NUMBERS = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
-export const MODIFIED_FIBONACCI_NUMBERS = [0, 0.5, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
+export const FIBONACCI_NUMBERS = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
+export const MODIFIED_FIBONACCI_NUMBERS = [0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100];
 export const OPTION_CARDS = [
   {
     name: 'Egg Timer',
@@ -10,7 +10,7 @@ export const OPTION_CARDS = [
   {
     name: 'Coffee Time',
     emoji: '☕',
-    class: 'bg-stone-800',
+    class: 'bg-[#A47C6D]',
     selected: true,
   },
   {
