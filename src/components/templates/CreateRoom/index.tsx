@@ -10,6 +10,7 @@ import { Option, OptionCard } from '@/components/molecules/OptionCard';
 import { Card, CardGroup } from '@/components/organisms/CardGroup';
 
 import { FIBONACCI_NUMBERS, MODIFIED_FIBONACCI_NUMBERS, OPTION_CARDS } from '@/constants/common';
+import { fetchCreateRoom } from '@/utils/api/room';
 
 export const CreateRoom = () => {
   const router = useRouter();
@@ -46,9 +47,14 @@ export const CreateRoom = () => {
     setOptions(options.map((option, i) => (i === index ? { ...option, selected: !option.selected } : option)));
   };
 
-  const handleCreateRoomClick = () => {
-    // TODO: 방 생성 API 추가
-    router.push('room/8743b52063cd84097a65d1633f5c74f5');
+  const handleCreateRoomClick = async () => {
+    // TODO: check form data ( validation )
+    try {
+      const { id } = await fetchCreateRoom(roomName);
+      router.push(`/login?id=${id}`);
+    } catch (e) {
+      console.error('Error creating room:', e);
+    }
   };
 
   return (
