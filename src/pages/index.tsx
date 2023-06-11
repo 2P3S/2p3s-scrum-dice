@@ -1,20 +1,6 @@
+import { Paragraph } from '@/components/atoms/paragraph';
 import Head from 'next/head';
-
-// styles
-import classNames from 'classnames';
-import { Noto_Sans_KR, Lato } from 'next/font/google';
-
-const notoSansKr = Noto_Sans_KR({
-  // preload: true, 기본값
-  subsets: ['latin'], // 또는 preload: false
-  weight: ['100', '400', '700', '900'], // 가변 폰트가 아닌 경우, 사용할 fontWeight 배열
-});
-
-const lato = Lato({
-  subsets: ['latin'], // preload에 사용할 subsets입니다.
-  weight: ['100', '400', '700', '900'],
-  variable: '--lato', // CSS 변수 방식으로 스타일을 지정할 경우에 사용합니다.
-});
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -25,8 +11,13 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main className={classNames(notoSansKr.className, lato.variable)}>
+      <main className="m-4">
+        <Paragraph size="large">
+          <Link href="/login">👀 게스트로 로그인하기</Link>
+        </Paragraph>
+        <Paragraph size="large">
+          <Link href="/room">🎉 플래닝 포커 방 생성하기</Link>
+        </Paragraph>
       </main>
     </>
   );
