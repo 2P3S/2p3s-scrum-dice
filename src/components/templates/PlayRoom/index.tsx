@@ -34,7 +34,6 @@ export const PlayRoom = () => {
 
   useEffect(() => {
     const hasEggTimer = optionCards.find(card => card.name === 'Egg Timer' && card.selected);
-    console.log('hasEggTimer', hasEggTimer);
   }, [optionCards]);
 
   return (
