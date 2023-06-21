@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes } from 'react';
 import classnames from 'classnames';
 
-type CardState = 'openedMe' | 'openedOther' | 'selectable' | 'selected';
+type CardState = 'openedMe' | 'openedOther' | 'openedBefore' | 'selectable' | 'selected';
 
 const cardClassNames: Record<CardState, string> = {
   selected: 'text-5xl border-0 bg-blue-900 hover:bg-blue-900 -translate-y-4',
@@ -9,6 +9,7 @@ const cardClassNames: Record<CardState, string> = {
   openedMe: 'text-6xl border-0 bg-slate-400 hover:bg-slate-400 hover:cursor-default',
   openedOther:
     'text-6xl border-slate-400 text-black bg-white hover:bg-white hover:cursor-default hover:border-slate-400',
+  openedBefore: 'btn-square loading cursor-default border-slate-400 hover:border-slate-400',
 };
 
 export type CardProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -20,8 +21,14 @@ export const Card = ({ children, className, state, ...props }: CardProps) => {
   const classNames = classnames(className, 'btn no-animation w-20 h-[92px] font-lato', cardStyle);
 
   return (
-    <button className={classNames} {...props}>
-      {children}
-    </button>
+    <>
+      {state === 'openedBefore' ? (
+        <div className={classnames('btn no-animation w-20 h-[92px] rounded-lg text-[64px]', cardClassNames[state])} />
+      ) : (
+        <button className={classNames} {...props}>
+          {children}
+        </button>
+      )}
+    </>
   );
 };

@@ -20,7 +20,7 @@ export const Navigation = () => {
           <Link href="/">Home</Link>
         </li>
         <li>
-          <Link href="/room">Rooms</Link>
+          <Link href="/room">Room</Link>
         </li>
         <li>
           <Link href="/login">Contact</Link>
@@ -44,13 +44,13 @@ export const Navigation = () => {
             aria-labelledby="menu_button"
             className="invisible peer-aria-expanded:visible absolute w-[70px] text-center space-y-3 py-2 rounded bg-white"
           >
-            <li role="none">
-              <Link href="/" role="menuitem" className="">
+            <li role="menuitem">
+              <Link href="/" className="">
                 EN
               </Link>
             </li>
-            <li role="none">
-              <Link href="/" role="menuitem" className="text-sm">
+            <li role="menuitem">
+              <Link href="/" className="text-sm">
                 JP
               </Link>
             </li>

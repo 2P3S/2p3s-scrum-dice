@@ -1,12 +1,18 @@
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+
 import { Button } from '@/components/atoms/Button';
 import { Title } from '@/components/atoms/Title';
 import { Input } from '@/components/atoms/input';
 
-import { useState } from 'react';
+import { fetchEnterRoom } from '@/utils/api/room';
 
 export const GuestLogin = () => {
   const [userName, setUserName] = useState<string>('');
   const [isChecked, setIsChecked] = useState<boolean>(false);
+
+  const router = useRouter();
+  const { id: roomId } = router.query;
 
   const handleUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(event.target.value);
@@ -16,9 +22,14 @@ export const GuestLogin = () => {
     setIsChecked(event.target.checked);
   };
 
-  const handleGuestLogin = () => {
-    console.log('userName', userName);
-    console.log('isChecked', isChecked);
+  const handleGuestLogin = async () => {
+    if (!isChecked) return alert('이용약관 및 개인정보취급방침에 동의를 클릭해주세요.');
+    try {
+      await fetchEnterRoom(roomId as string, userName);
+      router.push(`/room/${roomId}`);
+    } catch (e) {
+      console.error('Error creating room:', e);
+    }
   };
 
   return (

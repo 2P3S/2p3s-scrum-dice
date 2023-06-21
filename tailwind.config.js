@@ -7,6 +7,9 @@ module.exports = {
         lato: ['var(--font-lato)'],
         notoSansKr: ['var(--font-notoSansKr)'],
       },
+      backgroundImage: {
+        'poker-background': "url('/poker-background.png')",
+      },
     },
   },
   plugins: [require('daisyui')],
