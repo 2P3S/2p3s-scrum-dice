@@ -6,10 +6,12 @@ import { Title } from '@/components/atoms/Title';
 import { Input } from '@/components/atoms/input';
 
 import { fetchEnterRoom } from '@/utils/api/room';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 export const GuestLogin = () => {
   const [userName, setUserName] = useState<string>('');
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [member, setMember] = useLocalStorage('member', {});
 
   const router = useRouter();
   const { id: roomId } = router.query;
@@ -25,7 +27,9 @@ export const GuestLogin = () => {
   const handleGuestLogin = async () => {
     if (!isChecked) return alert('이용약관 및 개인정보취급방침에 동의를 클릭해주세요.');
     try {
-      await fetchEnterRoom(roomId as string, userName);
+      const res = await fetchEnterRoom(roomId as string, userName);
+      setMember(res);
+
       router.push(`/room/${roomId}`);
     } catch (e) {
       console.error('Error creating room:', e);
