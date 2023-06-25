@@ -4,6 +4,7 @@ import useSocket from '@/hooks/useSocket';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
 import { PlayRoom } from '@/components/templates/PlayRoom';
+import { Button } from '@/components/atoms/Button';
 
 type JoinSuccessRes = {
   data: {
@@ -29,9 +30,10 @@ const PokerRoom = () => {
   const { id: roomId } = router.query;
 
   useEffect(() => {
-    if (!socket) return;
+    if (!socket || !roomId) return;
 
     const handleFailure = (res: JoinFailureRes) => {
+      console.log('✅ handleFailure', res);
       setEnterSuccess(res.success);
 
       // member 정보가 없을 경우 비회원 로그인 페이지로 이동하기
@@ -39,13 +41,25 @@ const PokerRoom = () => {
     };
 
     const handleJoinSuccess = (res: JoinSuccessRes) => {
+      console.log('✅ handleJoinSuccess', res);
+
       setEnterSuccess(res.success);
       setMember(res.data.member);
       setRoom(res.data.room);
+
+      socket?.emit('join-request', {
+        memberId: member?.id,
+        roomId: member?.room,
+      });
+    };
+
+    const handleMemberConnected = (res: any) => {
+      console.log('✅ handleMemberConnected', res);
     };
 
     socket.on('failure', handleFailure);
     socket.on('join-success', handleJoinSuccess);
+    socket.on('member-connected', handleMemberConnected);
 
     socket.emit('join-room', {
       memberId: member?.id,
