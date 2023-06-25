@@ -51,7 +51,7 @@ const PokerRoom = () => {
     };
   }, [socket, member, setMember]);
 
-  if (!isEnterSuccess || !room) return <div>loading...</div>;
+  if (!isEnterSuccess || !room) return <div className="text-center">loading...</div>;
 
   return <PlayRoom room={room} />;
 };

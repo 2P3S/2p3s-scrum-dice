@@ -8,13 +8,15 @@ import { Input } from '@/components/atoms/input';
 import { fetchEnterRoom } from '@/utils/api/room';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
-export const GuestLogin = () => {
+type GuestLoginProps = {
+  roomId: string;
+};
+
+export const GuestLogin = ({ roomId }: GuestLoginProps) => {
   const [userName, setUserName] = useState<string>('');
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [member, setMember] = useLocalStorage('member', {});
-
   const router = useRouter();
-  const { id: roomId } = router.query;
 
   const handleUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(event.target.value);
