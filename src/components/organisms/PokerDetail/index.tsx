@@ -4,12 +4,13 @@ import { Paragraph } from '@/components/atoms/paragraph';
 import clipboardCopy from 'clipboard-copy';
 
 type PokerDetailProps = {
+  room: Room;
   isOpen: boolean;
   handleOpen: () => void;
   handleReset: () => void;
 };
 
-export const PokerDetail = ({ isOpen, handleOpen, handleReset }: PokerDetailProps) => {
+export const PokerDetail = ({ room, isOpen, handleOpen, handleReset }: PokerDetailProps) => {
   const handleCopyUrl = () => {
     const currentUrl = window.location.href;
     clipboardCopy(currentUrl)
@@ -25,12 +26,12 @@ export const PokerDetail = ({ isOpen, handleOpen, handleReset }: PokerDetailProp
 
   return (
     <div className="py-10 mb-10 border-b-2 border-slate-100">
-      <div className="flex justify-between mb-3">
-        <Title headingLevel="h3">2022/03/27 플래닝포커</Title>
+      <div className="flex justify-between">
+        <Title headingLevel="h3">{room.name}</Title>
         <Button onClick={handleCopyUrl}>URL COPY</Button>
       </div>
-      <Paragraph size="large" className="font-bold mb-4">
-        🎲 스크럼 3회차 🎲
+      <Paragraph size="large" className="mb-4">
+        🎲 스크럼 1회차 🎲
       </Paragraph>
       <div className="flex space-x-2">
         <CountDownButton isOpen={isOpen} counter={180} className="bg-yellow-400 border-0">
