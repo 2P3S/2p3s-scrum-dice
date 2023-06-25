@@ -6,7 +6,11 @@ import { PokerVoting } from '@/components/organisms/PokerVoting';
 
 import { FIBONACCI_NUMBERS, OPTION_CARDS, players } from '@/constants/common';
 
-export const PlayRoom = () => {
+type PlayRoomProps = {
+  room: Room;
+};
+
+export const PlayRoom = ({ room }: PlayRoomProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const [selectedCard, setSelectedCard] = useState<SelectedCard>({
     type: 'poker',
@@ -38,7 +42,7 @@ export const PlayRoom = () => {
 
   return (
     <div className="space-y-4 max-w-6xl mx-auto">
-      <PokerDetail isOpen={isOpen} handleOpen={handleOpen} handleReset={handleReset} />
+      <PokerDetail room={room} isOpen={isOpen} handleOpen={handleOpen} handleReset={handleReset} />
       <PokerVoting players={players} isOpen={isOpen} />
       <PokerBoard
         pokerCards={pokerCards}

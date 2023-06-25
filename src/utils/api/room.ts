@@ -8,7 +8,7 @@ type CreateRoomResponse = {
   updated_at: string;
 };
 
-export const fetchCreateRoom = async (roomName: string): Promise<CreateRoomResponse> => {
+export const fetchCreateRoom = async (roomName: string) => {
   try {
     const response: AxiosResponse<CreateRoomResponse> = await axios.post('api/room/create', {
       roomName: roomName,
@@ -22,7 +22,7 @@ export const fetchCreateRoom = async (roomName: string): Promise<CreateRoomRespo
 
 export const fetchEnterRoom = async (roomId: string, memberName: string) => {
   try {
-    const response: AxiosResponse<CreateRoomResponse> = await axios.post(`api/room/enter/${roomId}`, {
+    const response: AxiosResponse<Member> = await axios.post(`api/room/enter/${roomId}`, {
       memberName: memberName,
     });
 
