@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import useSocket from '@/hooks/useSocket';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
@@ -24,11 +25,17 @@ const PokerRoom = () => {
   const [room, setRoom] = useState<Room | null>(null);
   const [member, setMember] = useLocalStorage<Member | null>('member', null);
 
+  const router = useRouter();
+  const { id: roomId } = router.query;
+
   useEffect(() => {
     if (!socket) return;
 
     const handleFailure = (res: JoinFailureRes) => {
       setEnterSuccess(res.success);
+
+      // member 정보가 없을 경우 비회원 로그인 페이지로 이동하기
+      if (roomId && !member) router.push(`/login?id=${roomId}`);
     };
 
     const handleJoinSuccess = (res: JoinSuccessRes) => {
@@ -49,7 +56,7 @@ const PokerRoom = () => {
       socket.off('failure', handleFailure);
       socket.off('join-success', handleJoinSuccess);
     };
-  }, [socket, member, setMember]);
+  }, [socket, roomId]);
 
   if (!isEnterSuccess || !room) return <div className="text-center">loading...</div>;
 
