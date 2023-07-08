@@ -7,23 +7,23 @@ import { Title } from '@/components/atoms/Title';
 import { Paragraph } from '@/components/atoms/paragraph';
 
 import { Option, OptionCard } from '@/components/molecules/OptionCard';
-import { Card, CardGroup } from '@/components/organisms/CardGroup';
+import { CardGroup } from '@/components/organisms/CardGroup';
 
 import { FIBONACCI_NUMBERS, MODIFIED_FIBONACCI_NUMBERS, OPTION_CARDS } from '@/constants/common';
 import { fetchCreateRoom } from '@/utils/api/room';
 
-export const CreateRoom = () => {
+const CreateRoom = () => {
   const router = useRouter();
 
   const [roomName, setRoomName] = useState<string>('');
-  const [cards, setCards] = useState<Card[]>([
+  const [cards, setCards] = useState<CardGroup[]>([
     {
-      title: 'fibonacci',
+      title: 'FIBONACCI_NUMBERS',
       cards: FIBONACCI_NUMBERS,
       selected: true,
     },
     {
-      title: 'modifiedFibonacci',
+      title: 'MODIFIED_FIBONACCI_NUMBERS',
       cards: MODIFIED_FIBONACCI_NUMBERS,
       selected: false,
     },
@@ -47,13 +47,34 @@ export const CreateRoom = () => {
     setOptions(options.map((option, i) => (i === index ? { ...option, selected: !option.selected } : option)));
   };
 
+  const validateFormData = (selectedCard: CardGroup | undefined, roomName: string) => {
+    if (!selectedCard) {
+      return 'No card selected.';
+    }
+
+    if (roomName === '') {
+      return 'Room name is required.';
+    }
+
+    return null;
+  };
+
   const handleCreateRoomClick = async () => {
-    // TODO: check form data ( validation )
+    const selectedCard = cards.find(card => card.selected);
+    const validationError = validateFormData(selectedCard, roomName);
+
+    if (validationError) {
+      alert(validationError);
+      return;
+    }
+
+    const selectedCardTitle = selectedCard!.title;
+
     try {
-      const { id } = await fetchCreateRoom(roomName);
+      const { id } = await fetchCreateRoom(roomName, selectedCardTitle);
       router.push(`/login?id=${id}`);
     } catch (e) {
-      console.error('Error creating room:', e);
+      alert(`room 입장에 실패하였습니다. ${e}`);
     }
   };
 
@@ -69,7 +90,6 @@ export const CreateRoom = () => {
         value={roomName}
         onChange={handleRoomNameChange}
       />
-      {/* FIXME: section 태그는 organisms에 분리하기 */}
       <section>
         <Paragraph className="pb-2">기본 카드 묶음을 선택해주세요</Paragraph>
         <div className="flex justify-around space-x-2">
@@ -100,3 +120,5 @@ export const CreateRoom = () => {
     </div>
   );
 };
+
+export default CreateRoom;

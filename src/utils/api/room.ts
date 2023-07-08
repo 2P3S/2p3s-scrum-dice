@@ -8,10 +8,11 @@ type CreateRoomResponse = {
   updated_at: string;
 };
 
-export const fetchCreateRoom = async (roomName: string) => {
+export const fetchCreateRoom = async (roomName: string, deckType: DeckType) => {
   try {
     const response: AxiosResponse<CreateRoomResponse> = await axios.post('api/room/create', {
-      roomName: roomName,
+      roomName,
+      deckType,
     });
     return response.data;
   } catch (error) {
