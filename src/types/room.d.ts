@@ -3,7 +3,7 @@ type Room = {
   name: string;
   votes: Vote[];
   deck: DeckType;
-  members: string[];
+  members: Member[];
   created_at: string;
   updated_at: string;
 };
