@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, RefObject } from 'react';
 import classnames from 'classnames';
 
 type InputProps = HTMLAttributes<HTMLInputElement> & {
@@ -8,6 +8,7 @@ type InputProps = HTMLAttributes<HTMLInputElement> & {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
   placeholder?: string;
+  ref?: RefObject<HTMLInputElement>;
 };
 
 export const Input = ({
@@ -19,6 +20,7 @@ export const Input = ({
   onChange,
   value,
   placeholder,
+  ref,
   ...props
 }: InputProps) => {
   const style = classnames(className, 'input input-bordered');
@@ -37,6 +39,7 @@ export const Input = ({
         onChange={onChange}
         value={value}
         placeholder={placeholder}
+        ref={ref}
         {...props}
       />
       {children}
