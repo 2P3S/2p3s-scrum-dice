@@ -4,24 +4,57 @@
  */
 type DeckType = 'FIBONACCI_NUMBERS' | 'MODIFIED_FIBONACCI_NUMBERS';
 
+/**
+ * room 만들기에 사용되는 카드 그룹
+ */
 type CardGroup = {
-  title: DeckType;
-  cards: number[];
-  selected: boolean;
+  contents: CardContent[];
 };
 
+type DeckCardGroup = CardGroup & {
+  deckType: DeckType;
+};
+
+type OptionCardGroup = CardGroup;
+
+/**
+ * room 생성 후 사용되는 카드
+ */
+type Card = {
+  vote: Vote;
+  member: Member;
+  type: CardType;
+  content: CardContent;
+  // 투표 여부를 나타내는 상태 값
+  status: boolean;
+};
+
+/**
+ * room 생성 후 선택 가능한 카드 타입
+ */
+type CardType = 'cost-type' | 'not-cost-type';
+
+/**
+ * room 생성 후 선택 가능한 카드 컨텐츠
+ */
+type CardContent = CostContent | NotCostContent;
+
+type CostContent = number;
+type NotCostContent = 'coffee' | 'question' | 'infinity' | 'break';
+
+/**
+ * NotCostContent의 커스텀 옵션
+ */
 type OptionCard = {
-  name: string;
+  name: NotCostContent;
   emoji: string;
   class: string;
-  selected: boolean;
 };
 
-// 포커보드에 선택 가능한 카드 타입
-type CardType = 'poker' | 'option';
-
-// 포커보드에 선택된 카드 타입
+/**
+ * 포커 보드에 유저의 클릭 이벤트로 인해 선택된 카드
+ */
 type SelectedCard = {
   type: CardType;
-  value: number | string;
+  content: CardContent;
 };
