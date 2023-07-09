@@ -1,13 +1,7 @@
 import { Card } from '@/components/atoms/Card';
 import classnames from 'classnames';
 
-export type Card = {
-  title: string;
-  cards: number[];
-  selected: boolean;
-};
-
-export type CardGroupProps = Card & {
+export type CardGroupProps = CardGroup & {
   onCardClick: (title: string) => void;
 };
 

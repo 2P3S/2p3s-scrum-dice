@@ -1,4 +1,4 @@
-import { Paragraph } from '@/components/atoms/paragraph';
+import { Paragraph } from '@/components/atoms/Paragraph';
 import Head from 'next/head';
 import Link from 'next/link';
 

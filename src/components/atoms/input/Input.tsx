@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, RefObject } from 'react';
 import classnames from 'classnames';
 
 type InputProps = HTMLAttributes<HTMLInputElement> & {
