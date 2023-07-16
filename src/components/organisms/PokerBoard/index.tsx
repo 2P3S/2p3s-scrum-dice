@@ -1,48 +1,56 @@
-import { Paragraph } from '@/components/atoms/paragraph';
-import { Card } from '@/components/atoms/Card';
-import { OptionCard } from '@/components/molecules/OptionCard';
+import { useState } from 'react';
+
+import { Paragraph } from '@/components/atoms/Paragraph';
+import { MockCard } from '@/components/atoms/Card';
 
 type PokerBoardProps = {
   pokerCards: number[];
   optionCards: OptionCard[];
-  selectedCard: SelectedCard;
-  setSelectedCard: (selectedCard: SelectedCard) => void;
 };
 
-export const PokerBoard = ({ pokerCards, optionCards, selectedCard, setSelectedCard }: PokerBoardProps) => {
-  // 카드는 포커와 옵션 상관없이 1개만 선택할 수 있다.
+export const PokerBoard = ({ pokerCards, optionCards }: PokerBoardProps) => {
+  const initializedCard: SelectedCard = {
+    type: 'cost-type',
+    content: 1,
+  };
+  const [selectedCard, setSelectedCard] = useState<SelectedCard>(initializedCard);
+
+  const isSelectedCard = (value: CardContent) => {
+    return selectedCard.content === value;
+  };
+
+  const handleCardClick = (type: CardType, content: CardContent) => {
+    setSelectedCard({ type, content });
+  };
+
   return (
     <div>
       <Paragraph size="large" className="font-bold">
         카드를 선택해주세요
       </Paragraph>
       <div className="mt-5">
-        {/* 포커카드 */}
+        {/* mock-cost-type cards */}
         <div className="flex space-x-4">
-          {pokerCards.map(cardValue => (
-            <Card
-              key={cardValue}
-              state={selectedCard.value === cardValue ? 'selected' : 'selectable'}
-              onClick={() => {
-                setSelectedCard({ type: 'poker', value: cardValue });
-              }}
-            >
-              {cardValue}
-            </Card>
+          {pokerCards.map(cardContent => (
+            <MockCard
+              cardType="cost-type"
+              content={cardContent}
+              key={cardContent}
+              className={isSelectedCard(cardContent) ? '-translate-y-4' : ''}
+              onClick={() => handleCardClick('cost-type', cardContent)}
+            />
           ))}
         </div>
-        {/* 옵션카드 */}
+        {/* mock-not-cost-type cards */}
         <div className="flex space-x-4 mt-6">
           {optionCards.map(option => (
-            <div key={option.name} className="flex flex-col justify-center items-center">
-              <OptionCard
-                key={option.name}
-                state={selectedCard.value === option.name ? 'selected' : 'selectable'}
-                option={option}
-                labelVisibility={true}
-                handleClick={() => setSelectedCard({ type: 'option', value: option.name })}
-              />
-            </div>
+            <MockCard
+              cardType="not-cost-type"
+              content={option.name}
+              key={option.name}
+              className={isSelectedCard(option.name) ? '-translate-y-4' : ''}
+              onClick={() => handleCardClick('not-cost-type', option.name)}
+            />
           ))}
         </div>
       </div>
