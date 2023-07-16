@@ -21,8 +21,8 @@ type OptionCardGroup = CardGroup;
  * room 생성 후 사용되는 카드
  */
 type Card = {
-  vote: Vote;
-  member: Member;
+  vote: string | Vote;
+  member: string | Member;
   type: CardType;
   content: CardContent;
   // 투표 여부를 나타내는 상태 값

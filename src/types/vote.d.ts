@@ -1,7 +1,10 @@
 type Vote = {
+  cards: Card[];
+  created_at: string;
+  id: string;
   name: string;
+  room: string | Room;
   // 개표 여부를 나타내는 상태 값
   status: boolean;
-  cards: Card[];
-  room: Room;
+  updated_at: string;
 };

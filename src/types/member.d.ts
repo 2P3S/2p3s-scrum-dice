@@ -1,7 +1,7 @@
 type Member = {
   id: string;
   name: string;
-  room: Room;
+  room: string | Room;
   socketId: string;
   status: boolean;
   created_at: string;
