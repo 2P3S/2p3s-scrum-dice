@@ -40,7 +40,7 @@ type CardType = 'cost-type' | 'not-cost-type';
 type CardContent = CostContent | NotCostContent;
 
 type CostContent = string;
-type NotCostContent = 'coffee' | 'question' | 'infinity' | 'break';
+type NotCostContent = 'coffee' | 'question' | 'king' | 'break';
 
 /**
  * NotCostContent의 커스텀 옵션
