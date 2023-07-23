@@ -1,5 +1,5 @@
-export const FIBONACCI_NUMBERS = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
-export const MODIFIED_FIBONACCI_NUMBERS = [0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100];
+export const FIBONACCI_NUMBERS = ['0', '1', '2', '3', '5', '8', '13', '21', '34', '55', '89'];
+export const MODIFIED_FIBONACCI_NUMBERS = ['0', '0.5', '1', '2', '3', '5', '8', '13', '20', '40', '100'];
 export const DECK_TYPES: DeckType[] = ['FIBONACCI_NUMBERS', 'MODIFIED_FIBONACCI_NUMBERS'];
 export const NOT_COST_CONTENTS: NotCostContent[] = ['coffee', 'question', 'infinity', 'break'];
 

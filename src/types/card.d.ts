@@ -39,7 +39,7 @@ type CardType = 'cost-type' | 'not-cost-type';
  */
 type CardContent = CostContent | NotCostContent;
 
-type CostContent = number;
+type CostContent = string;
 type NotCostContent = 'coffee' | 'question' | 'infinity' | 'break';
 
 /**
