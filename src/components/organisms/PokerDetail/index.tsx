@@ -2,7 +2,6 @@ import { Button, CountDownButton } from '@/components/atoms/Button';
 import { Title } from '@/components/atoms/Title';
 import { Paragraph } from '@/components/atoms/Paragraph';
 import clipboardCopy from 'clipboard-copy';
-import { useEffect, useState } from 'react';
 
 type PokerDetailProps = {
   room: Room;

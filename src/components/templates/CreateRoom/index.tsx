@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Button } from '@/components/atoms/Button';
 import { Input } from '@/components/atoms/Input';
@@ -7,9 +7,9 @@ import { Title } from '@/components/atoms/Title';
 import { Paragraph } from '@/components/atoms/Paragraph';
 
 import { DeckCardGroup, OptionCardGroup } from '@/components/organisms/CardGroup';
-
 import { FIBONACCI_NUMBERS, MODIFIED_FIBONACCI_NUMBERS, NOT_COST_CONTENTS } from '@/constants/common';
-import { fetchCreateRoom } from '@/utils/api/room';
+
+import { fetchCreateRoom } from '@/utils/http/room';
 
 const CreateRoom = () => {
   const router = useRouter();

@@ -29,6 +29,7 @@ export const PokerVoting = ({ room, vote }: PokerVotingProps) => {
   return (
     <div className="flex space-x-4">
       {room.members.map(member => {
+        if (!member.status) return;
         if (!cards[member.id]) {
           return (
             <div key={member.id}>
