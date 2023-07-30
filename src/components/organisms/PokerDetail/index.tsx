@@ -1,7 +1,9 @@
 import { Button, CountDownButton } from '@/components/atoms/Button';
 import { Title } from '@/components/atoms/Title';
 import { Paragraph } from '@/components/atoms/Paragraph';
+
 import clipboardCopy from 'clipboard-copy';
+import useSocketStore from '@/store/useSocketStore';
 
 type PokerDetailProps = {
   room: Room;
@@ -9,6 +11,8 @@ type PokerDetailProps = {
 };
 
 export const PokerDetail = ({ room, vote }: PokerDetailProps) => {
+  const socket = useSocketStore(state => state.socket);
+
   const handleResetCard = () => {
     // TODO: socket - reset-card
   };

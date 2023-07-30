@@ -66,23 +66,25 @@ export const PokerBoard = ({ pokerCards, optionCards, vote }: PokerBoardProps) =
               cardType="cost-type"
               content={cardContent}
               key={cardContent}
+              isPokerBoard={true}
               className={isSelectedCard(cardContent) ? '!-translate-y-4' : ''}
               onClick={() => handleCardClick('cost-type', cardContent)}
             />
           ))}
         </div>
         {/* mock-not-cost-type cards */}
-        <div className="flex space-x-4 mt-6">
+        {/* <div className="flex space-x-4 mt-6">
           {optionCards.map(option => (
             <MockCard
               cardType="not-cost-type"
               content={option.name}
               key={option.name}
+              isPokerBoard={true}
               className={isSelectedCard(option.name) ? '!-translate-y-4' : ''}
               onClick={() => handleCardClick('not-cost-type', option.name)}
             />
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -9,13 +9,10 @@ type PokerVotingProps = {
 };
 
 export const PokerVoting = ({ room, vote }: PokerVotingProps) => {
-  // TODO: 자신의 카드는 다른 스타일로 보여주는게 맞지 않을까?
   const member = useMemberStore(state => state.member);
 
-  // key 는 members 의 id
   type MemberId = (typeof room.members)[number]['id'];
 
-  // after
   const cards: {
     [key: MemberId]: {
       content: CardContent;
@@ -28,22 +25,22 @@ export const PokerVoting = ({ room, vote }: PokerVotingProps) => {
 
   return (
     <div className="flex space-x-4">
-      {room.members.map(member => {
-        if (!member.status) return;
-        if (!cards[member.id]) {
+      {room.members.map(memberData => {
+        if (!memberData.status) return;
+        if (!cards[memberData.id]) {
           return (
-            <div key={member.id}>
+            <div key={memberData.id}>
               <TempCard />
-              <Paragraph>{member.name}</Paragraph>
+              <Paragraph>{memberData.name}</Paragraph>
             </div>
           );
         }
 
         return (
-          <div key={member.id}>
-            <Card card={cards[member.id]} vote={vote} />
+          <div key={memberData.id}>
+            <Card card={cards[memberData.id]} vote={vote} isMe={memberData.id === member?.id} />
             <Paragraph size="small" className="mt-2 ml-1">
-              {member.name}
+              {memberData.name}
             </Paragraph>
           </div>
         );

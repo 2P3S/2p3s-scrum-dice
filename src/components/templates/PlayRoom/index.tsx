@@ -18,14 +18,17 @@ export const PlayRoom = ({ room }: PlayRoomProps) => {
   const pokerCards = room.deck === 'FIBONACCI_NUMBERS' ? FIBONACCI_NUMBERS : MODIFIED_FIBONACCI_NUMBERS;
   const optionCards = OPTION_CARDS.filter(optionCard => optionCard.name !== 'break');
 
+  const handleCardSubmitted = (res: any) => {
+    console.log('card-submitted', res);
+    setVote(res.data.vote);
+  };
+
+  useEffect(() => {
+    setVote(room.votes[room.votes.length - 1]);
+  }, [room.votes]);
+
   useEffect(() => {
     if (!socket) return;
-    setVote(room.votes[room.votes.length - 1]);
-
-    const handleCardSubmitted = (res: any) => {
-      console.log('handleCardSubmitted', res);
-      setVote(res.data.vote);
-    };
 
     socket.on('card-submitted', handleCardSubmitted);
 
