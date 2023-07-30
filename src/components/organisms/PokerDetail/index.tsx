@@ -52,7 +52,9 @@ export const PokerDetail = ({ room, vote }: PokerDetailProps) => {
           🐣
         </CountDownButton> */}
         {vote.status ? (
-          <Button onClick={handleResetCard}>다음회차로 넘어가기</Button>
+          <Button className="bg-black text-white" onClick={handleResetCard}>
+            다음회차로 넘어가기
+          </Button>
         ) : (
           <Button onClick={handleOpenCard}>결과보기</Button>
         )}

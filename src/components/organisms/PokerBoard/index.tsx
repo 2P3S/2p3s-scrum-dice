@@ -15,14 +15,10 @@ export const PokerBoard = ({ pokerCards, optionCards, vote }: PokerBoardProps) =
   const socket = useSocketStore(state => state.socket);
   const member = useMemberStore(state => state.member);
 
-  const initializedCard: SelectedCard = {
-    type: 'cost-type',
-    content: '0',
-  };
-  const [selectedCard, setSelectedCard] = useState<SelectedCard>(initializedCard);
+  const [selectedCard, setSelectedCard] = useState<SelectedCard | null>(null);
 
   const isSelectedCard = (value: CardContent) => {
-    return selectedCard.content === value;
+    return selectedCard?.content === value;
   };
 
   const handleCardClick = (type: CardType, content: CardContent) => {
