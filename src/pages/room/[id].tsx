@@ -40,14 +40,14 @@ const PokerRoom = () => {
     setSocket(socket);
 
     socket.emit('join-request', {
-      roomId: localStorageMember?.room,
+      roomId: roomId,
       memberId: localStorageMember?.id,
     });
 
     const handleFailure = (res: JoinFailureRes) => {
       console.log('✅ handleFailure', res);
 
-      alert('에러가 발생했습니다!');
+      console.log('에러가 발생했습니다!');
       router.push(`/login?id=${roomId}`);
     };
 

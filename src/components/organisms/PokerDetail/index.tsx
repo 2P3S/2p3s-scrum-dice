@@ -16,10 +16,15 @@ export const PokerDetail = ({ room, vote }: PokerDetailProps) => {
   const member = useMemberStore(state => state.member);
 
   const handleResetCard = () => {
-    // TODO: socket - reset-card
+    const currentVoteNumber = room.votes.length;
+
+    socket?.emit('create-vote', {
+      roomId: room.id,
+      memberId: member?.id,
+      voteName: `${currentVoteNumber + 1}회차`,
+    });
   };
   const handleOpenCard = () => {
-    // TODO: socket - open-card
     socket?.emit('open-card', {
       roomId: room.id,
       memberId: member?.id,
