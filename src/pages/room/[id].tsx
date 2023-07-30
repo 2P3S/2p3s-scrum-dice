@@ -109,21 +109,14 @@ const PokerRoom = () => {
       setRoom(res.data.room);
     };
 
-    const handleCardOpened = (res: any) => {
-      console.log('handleCardOpened', res);
-      setRoom(res.data.room);
-    };
-
     socket.on('member-connected', handleMemberConnected);
     socket.on('member-disconnected', handleMemberDisconnected);
     socket.on('vote-created', handleVoteCreated);
-    socket.on('card-opened', handleCardOpened);
 
     return () => {
       socket.off('member-connected', handleMemberConnected);
       socket.off('member-disconnected', handleMemberDisconnected);
       socket.off('vote-created', handleVoteCreated);
-      socket.off('card-opened', handleCardOpened);
     };
   }, [room, socket]);
 

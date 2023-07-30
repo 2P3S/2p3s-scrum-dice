@@ -23,6 +23,8 @@ const getCardStyle = (type: CardType, content: CardContent, vote?: Vote, isPoker
     return `${cardStyle} text-4xl hover:cursor-default ${
       type === 'not-cost-type' ? `${optionCard?.class} ` : 'text-white border-slate-400 bg-slate-400 hover:bg-slate-400'
     }`;
+  } else if (vote && vote.status === true) {
+    return `${cardStyle} text-4xl hover:cursor-default`;
   }
 
   return cardStyle;

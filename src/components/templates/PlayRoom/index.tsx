@@ -20,6 +20,12 @@ export const PlayRoom = ({ room }: PlayRoomProps) => {
 
   const handleCardSubmitted = (res: any) => {
     console.log('card-submitted', res);
+
+    setVote(res.data.vote);
+  };
+
+  const handleCardOpened = (res: any) => {
+    console.log('card-opened', res);
     setVote(res.data.vote);
   };
 
@@ -31,11 +37,13 @@ export const PlayRoom = ({ room }: PlayRoomProps) => {
     if (!socket) return;
 
     socket.on('card-submitted', handleCardSubmitted);
+    socket.on('card-opened', handleCardOpened);
 
     return () => {
       socket.off('card-submitted', handleCardSubmitted);
+      socket.off('card-opened', handleCardOpened);
     };
-  }, [room.votes, socket]);
+  }, [socket]);
 
   return (
     <div className="space-y-4 max-w-6xl mx-auto">
