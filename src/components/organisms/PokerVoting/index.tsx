@@ -1,57 +1,50 @@
 import useMemberStore from '@/store/useMemberStore';
 
-import { Card } from '@/components/atoms/Card';
-import { OptionCard } from '@/components/molecules/OptionCard';
-import { Paragraph } from '@/components/atoms/paragraph';
-
-import { OPTION_CARDS } from '@/constants/common';
+import { Card, TempCard } from '@/components/atoms/Card';
+import { Paragraph } from '@/components/atoms/Paragraph';
 
 type PokerVotingProps = {
-  players: Player[];
-  isOpen: boolean;
+  room: Room;
+  vote: Vote;
 };
 
-export const PokerVoting = ({ players, isOpen }: PokerVotingProps) => {
+export const PokerVoting = ({ room, vote }: PokerVotingProps) => {
   const member = useMemberStore(state => state.member);
 
-  const findOptionCard = (player: Player): OptionCard => {
-    const optionCard = OPTION_CARDS.find(card => card.name === player.card.value);
+  type MemberId = (typeof room.members)[number]['id'];
 
-    if (optionCard === undefined)
-      return {
-        name: 'Error...',
-        emoji: '❌',
-        class: '',
-        selected: true,
-      };
-
-    return optionCard;
-  };
-
-  // TODO: 맴버 데이터가 없을경우 에러핸들링
-  if (member === undefined) return <>Error! no data...</>;
+  const cards: {
+    [key: MemberId]: {
+      content: CardContent;
+      type: CardType;
+    };
+  } = {};
+  vote.cards.forEach(({ member, content, type }) => {
+    cards[member as string] = { content, type };
+  });
 
   return (
     <div className="flex space-x-4">
-      {players.map(player => (
-        <div key={player.id}>
-          {player.card.type === 'poker' ? (
-            <Card state={player.id === member.id ? 'openedMe' : isOpen ? 'openedOther' : 'openedBefore'}>
-              {player.card.value}
-            </Card>
-          ) : (
-            <OptionCard
-              state={player.id === member.id ? 'openedMe' : isOpen ? 'openedOther' : 'openedBefore'}
-              labelVisibility={false}
-              option={findOptionCard(player)}
-            />
-          )}
+      {room.members.map(memberData => {
+        if (!memberData.status) return;
+        if (!cards[memberData.id]) {
+          return (
+            <div key={memberData.id}>
+              <TempCard />
+              <Paragraph>{memberData.name}</Paragraph>
+            </div>
+          );
+        }
 
-          <Paragraph size="small" className="mt-2 ml-1">
-            {player.name}
-          </Paragraph>
-        </div>
-      ))}
+        return (
+          <div key={memberData.id}>
+            <Card card={cards[memberData.id]} vote={vote} isMe={memberData.id === member?.id} />
+            <Paragraph size="small" className="mt-2 ml-1">
+              {memberData.name}
+            </Paragraph>
+          </div>
+        );
+      })}
     </div>
   );
 };

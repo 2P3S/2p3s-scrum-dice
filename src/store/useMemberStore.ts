@@ -7,23 +7,14 @@ type Member = {
 };
 
 type MemberState = {
-  member: Member | undefined;
-  setMember: (memberId: string) => void;
+  member: Member | null;
+  setMember: (member: Member) => void;
 };
 
 const useMemberStore = create<MemberState>(set => ({
-  member: {
-    id: '8743b52063cd84097a65d1633f5c74f5',
-    name: '승현',
-  },
-  setMember: memberId => {
-    //TODO: fetch getMemberName
-    set({
-      member: {
-        id: memberId,
-        name: 'fuga',
-      },
-    });
+  member: null,
+  setMember: member => {
+    set({ member });
   },
 }));
 
