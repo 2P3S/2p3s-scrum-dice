@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 
 import { Button } from '@/components/atoms/Button';
 import { Title } from '@/components/atoms/Title';
-import { Input } from '@/components/atoms/input';
+import { Input } from '@/components/atoms/Input';
 
-import { fetchEnterRoom } from '@/utils/api/room';
+import { fetchEnterRoom } from '@/utils/http/room';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
 type GuestLoginProps = {

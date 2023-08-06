@@ -1,4 +1,4 @@
-import { CreateRoom } from '@/components/templates/CreateRoom';
+import CreateRoom from '@/components/templates/CreateRoom';
 
 const Create = () => {
   return <CreateRoom />;

@@ -4,7 +4,8 @@ import useSocket from '@/hooks/useSocket';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
 import { PlayRoom } from '@/components/templates/PlayRoom';
-import { Button } from '@/components/atoms/Button';
+import useMemberStore from '@/store/useMemberStore';
+import useSocketStore from '@/store/useSocketStore';
 
 type JoinSuccessRes = {
   data: {
@@ -22,57 +23,104 @@ type JoinFailureRes = {
 
 const PokerRoom = () => {
   const socket = useSocket();
-  const [isEnterSuccess, setEnterSuccess] = useState<boolean>(false);
-  const [room, setRoom] = useState<Room | null>(null);
-  const [member, setMember] = useLocalStorage<Member | null>('member', null);
+  const [room, setRoom] = useState<Room>();
+  const [localStorageMember, setLocalStorageMember] = useLocalStorage<Member | null>('member', null);
+
+  const setMember = useMemberStore(state => state.setMember);
+  const setSocket = useSocketStore(state => state.setSocket);
 
   const router = useRouter();
   const { id: roomId } = router.query;
 
+  // 페이지 접속 후 room 접속 로직
   useEffect(() => {
     if (!socket || !roomId) return;
+    if (!localStorageMember) router.push(`/login?id=${roomId}`);
+
+    setSocket(socket);
+
+    socket.emit('join-request', {
+      roomId: roomId,
+      memberId: localStorageMember?.id,
+    });
 
     const handleFailure = (res: JoinFailureRes) => {
       console.log('✅ handleFailure', res);
-      setEnterSuccess(res.success);
 
-      // member 정보가 없을 경우 비회원 로그인 페이지로 이동하기
-      if (roomId && !member) router.push(`/login?id=${roomId}`);
+      console.log('에러가 발생했습니다!');
+      router.push(`/login?id=${roomId}`);
     };
 
-    const handleJoinSuccess = (res: JoinSuccessRes) => {
-      console.log('✅ handleJoinSuccess', res);
-
-      setEnterSuccess(res.success);
+    const handleRoomStatus = (res: any) => {
+      console.log('✅ handleRoomStatus', res.data);
       setMember(res.data.member);
-      setRoom(res.data.room);
 
-      socket?.emit('join-request', {
-        memberId: member?.id,
-        roomId: member?.room,
-      });
+      // room.votes 배열의 length 가 0 이면 create-vote 이벤트 전송.
+      if (res.data.room.votes.length === 0) {
+        console.log('회차 정보가 없기에 1회차를 생성합니다.');
+        return socket.emit('create-vote', {
+          roomId: res.data.room.id,
+          memberId: res.data.member.id,
+          voteName: '1회차',
+        });
+      }
+
+      setRoom(res.data.room);
     };
+
+    socket.on('room-status', handleRoomStatus);
+    socket.on('failure', handleFailure);
+
+    return () => {
+      socket.off('room-status', handleRoomStatus);
+      socket.off('failure', handleFailure);
+    };
+  }, [localStorageMember, roomId, router, setMember, setSocket, socket]);
+
+  // room 접속 후 투표 관련 로직
+  useEffect(() => {
+    if (!socket) return;
 
     const handleMemberConnected = (res: any) => {
       console.log('✅ handleMemberConnected', res);
+      setRoom(res.data.room);
     };
 
-    socket.on('failure', handleFailure);
-    socket.on('join-success', handleJoinSuccess);
-    socket.on('member-connected', handleMemberConnected);
+    const handleMemberDisconnected = (res: any) => {
+      if (!room) return;
+      console.log('✅ handleMemberDisconnected', res);
 
-    socket.emit('join-room', {
-      memberId: member?.id,
-      roomId: member?.room,
-    });
+      const copyRoom = room;
+      const members = copyRoom.members.map(member => {
+        if (member.id === res.data.member.id) {
+          member.status = false;
+        }
+
+        return member;
+      });
+
+      setRoom(prevRoom => {
+        return { ...(prevRoom as Room), members };
+      });
+    };
+
+    const handleVoteCreated = (res: any) => {
+      console.log('✅ handleVoteCreated', res);
+      setRoom(res.data.room);
+    };
+
+    socket.on('member-connected', handleMemberConnected);
+    socket.on('member-disconnected', handleMemberDisconnected);
+    socket.on('vote-created', handleVoteCreated);
 
     return () => {
-      socket.off('failure', handleFailure);
-      socket.off('join-success', handleJoinSuccess);
+      socket.off('member-connected', handleMemberConnected);
+      socket.off('member-disconnected', handleMemberDisconnected);
+      socket.off('vote-created', handleVoteCreated);
     };
-  }, [socket, roomId]);
+  }, [room, socket]);
 
-  if (!isEnterSuccess || !room) return <div className="text-center">loading...</div>;
+  if (!room) return <div className="text-center">loading...</div>;
 
   return <PlayRoom room={room} />;
 };

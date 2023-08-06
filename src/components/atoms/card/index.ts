@@ -1,1 +1,1 @@
-export { Card } from './Card';
+export { MockCard, TempCard, Card } from './Card';

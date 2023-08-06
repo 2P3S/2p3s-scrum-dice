@@ -1,4 +1,4 @@
-import { Paragraph } from '@/components/atoms/paragraph';
+import { Paragraph } from '@/components/atoms/Paragraph';
 import Image from 'next/image';
 import Link from 'next/link';
 
