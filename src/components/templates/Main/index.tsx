@@ -1,24 +1,22 @@
 import { LinkButton } from '@/components/atoms/Button';
-import { Title } from '@/components/atoms/Title';
-import { Paragraph } from '@/components/atoms/paragraph';
+import { Paragraph } from '@/components/atoms/Paragraph';
 
 export const Main = () => {
   return (
-    <main className="m-auto max-w-md py-32 text-center">
-      <Paragraph size="large" className="mb-4">
-        지금까지 없던 혁신적인 플래닝 포커
-      </Paragraph>
-      <Title headingLevel="h1" className="font-notoSansKr !text-4xl font-bold text-blue-600 mb-10">
-        “Scrum Dice”로 팀워크를 한 단계 업그레이드 하세요!
-      </Title>
-      <Paragraph size="small" className="px-5 mb-10 text-slate-500">
-        &apos;플래닝 포커&apos;로 팀원들과 함께 더욱 효율적인 스크럼을 진행해보세요. 자동으로 평균을 계산해 시간을
-        아껴드릴 뿐만 아니라, 애그 타이머와 쉬어가기 기능을 제공해 스트레스를 줄이고 집중력을 높일 수 있습니다. 또한, 매
-        회차마다 기록이 저장되어 나중에도 쉽게 참고할 수 있고, 매회차 이름을 커스텀할 수 있어 더 나은 팀워크를 위한
-        환경을 제공합니다.
-      </Paragraph>
-      <LinkButton href="/room" className="rounded-full px-12">
-        지금 바로 시작해보세요
+    <main className="m-auto max-w-2xl pt-32 text-center">
+      <div>
+        <div className="text-2xl text-blue-600">효율적인 플래닝 포커를 위한</div>
+        <div className="relative text-5xl font-bold text-blue-600 sm:text-5xl my-3 animate-fade animate-duration-[3000ms] animate-ease-linear">
+          Scrum Dice<span className="text-2xl ml-2">로</span>
+          <span className="animate-ping absolute inline-flex h-1.5 w-1.5 rounded-full bg-blue-400 opacity-75"></span>
+        </div>
+        <div className="text-2xl text-blue-600 mb-10">실시간 투표를 진행해보세요</div>
+      </div>
+      {/* <Paragraph size="small" className="">
+        팀의 플래닝 포커를 편리하고 친밀하게 만들어줄게요
+      </Paragraph> */}
+      <LinkButton href="/room" className="rounded-full w-2/4">
+        지금 바로 시작하기
       </LinkButton>
     </main>
   );
