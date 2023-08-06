@@ -12,7 +12,11 @@ import { Card, CardGroup } from '@/components/organisms/CardGroup';
 import { FIBONACCI_NUMBERS, MODIFIED_FIBONACCI_NUMBERS, OPTION_CARDS } from '@/constants/common';
 import { fetchCreateRoom } from '@/utils/api/room';
 
+import { useTranslation } from 'next-i18next';
+
 export const CreateRoom = () => {
+  const { t } = useTranslation(['common', 'createroom']);
+
   const router = useRouter();
 
   const [roomName, setRoomName] = useState<string>('');
@@ -60,7 +64,8 @@ export const CreateRoom = () => {
   return (
     <div className="px-16 py-5 space-y-10">
       <Title headingLevel="h3" emoji="🎉" className="font-bold">
-        플래닝 포커 방 생성하기
+        { t('common:플래닝_포커_방_생성하기') }
+        { t('createroom:test') }
       </Title>
       <Input
         label="방 이름을 입력해주세요"

@@ -18,10 +18,10 @@ export default function Home() {
       </Head>
       <main className="m-4">
         <Paragraph size="large">
-          <Link href="/login">{ t('guest-login') }</Link>
+          <Link href="/login">{ t('게스트로_로그인하기') }</Link>
         </Paragraph>
         <Paragraph size="large">
-          <Link href="/room">{ t('create-poker-room') }</Link>
+          <Link href="/room">{ t('플래닝_포커_방_생성하기') }</Link>
         </Paragraph>
       </main>
     </>
@@ -30,6 +30,6 @@ export default function Home() {
 
 export const getStaticProps = async ({ locale }: any) => ({
   props: {
-    ...(await serverSideTranslations(locale, ["common"])),
+    ...(await serverSideTranslations(locale, ['common', 'createroom'])),
   },
 });
