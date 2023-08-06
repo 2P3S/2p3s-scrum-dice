@@ -1,57 +1,52 @@
 import useMemberStore from '@/store/useMemberStore';
 
-import { Card } from '@/components/atoms/Card';
-import { OptionCard } from '@/components/molecules/OptionCard';
-import { Paragraph } from '@/components/atoms/paragraph';
-
-import { OPTION_CARDS } from '@/constants/common';
+import { Card, TempCard } from '@/components/atoms/Card';
+import { Paragraph } from '@/components/atoms/Paragraph';
 
 type PokerVotingProps = {
-  players: Player[];
-  isOpen: boolean;
+  room: Room;
+  vote: Vote;
 };
 
-export const PokerVoting = ({ players, isOpen }: PokerVotingProps) => {
+export const PokerVoting = ({ room, vote }: PokerVotingProps) => {
+  // TODO: 자신의 카드는 다른 스타일로 보여주는게 맞지 않을까?
   const member = useMemberStore(state => state.member);
 
-  const findOptionCard = (player: Player): OptionCard => {
-    const optionCard = OPTION_CARDS.find(card => card.name === player.card.value);
+  // key 는 members 의 id
+  type MemberId = (typeof room.members)[number]['id'];
 
-    if (optionCard === undefined)
-      return {
-        name: 'Error...',
-        emoji: '❌',
-        class: '',
-        selected: true,
-      };
-
-    return optionCard;
-  };
-
-  // TODO: 맴버 데이터가 없을경우 에러핸들링
-  if (member === undefined) return <>Error! no data...</>;
+  // after
+  const cards: {
+    [key: MemberId]: {
+      content: CardContent;
+      type: CardType;
+    };
+  } = {};
+  vote.cards.forEach(({ member, content, type }) => {
+    cards[member as string] = { content, type };
+  });
 
   return (
     <div className="flex space-x-4">
-      {players.map(player => (
-        <div key={player.id}>
-          {player.card.type === 'poker' ? (
-            <Card state={player.id === member.id ? 'openedMe' : isOpen ? 'openedOther' : 'openedBefore'}>
-              {player.card.value}
-            </Card>
-          ) : (
-            <OptionCard
-              state={player.id === member.id ? 'openedMe' : isOpen ? 'openedOther' : 'openedBefore'}
-              labelVisibility={false}
-              option={findOptionCard(player)}
-            />
-          )}
+      {room.members.map(member => {
+        if (!cards[member.id]) {
+          return (
+            <div key={member.id}>
+              <TempCard />
+              <Paragraph>{member.name}</Paragraph>
+            </div>
+          );
+        }
 
-          <Paragraph size="small" className="mt-2 ml-1">
-            {player.name}
-          </Paragraph>
-        </div>
-      ))}
+        return (
+          <div key={member.id}>
+            <Card card={cards[member.id]} vote={vote} />
+            <Paragraph size="small" className="mt-2 ml-1">
+              {member.name}
+            </Paragraph>
+          </div>
+        );
+      })}
     </div>
   );
 };
