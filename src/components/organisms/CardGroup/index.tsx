@@ -18,7 +18,7 @@ export const DeckCardGroup = (props: DeckCardGroupProps) => {
       onClick={() => props.setDeckType(props.deckType)}
     >
       {props.contents.map(content => (
-        <MockCard className="!text-4xl" cardType="cost-type" content={content} key={content} />
+        <MockCard className="!text-4xl" cardType="cost-type" content={content} key={content} isPokerBoard={true} />
       ))}
     </div>
   );

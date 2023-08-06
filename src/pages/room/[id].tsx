@@ -5,6 +5,7 @@ import useLocalStorage from '@/hooks/useLocalStorage';
 
 import { PlayRoom } from '@/components/templates/PlayRoom';
 import useMemberStore from '@/store/useMemberStore';
+import useSocketStore from '@/store/useSocketStore';
 
 type JoinSuccessRes = {
   data: {
@@ -22,35 +23,36 @@ type JoinFailureRes = {
 
 const PokerRoom = () => {
   const socket = useSocket();
-  const [isEnterSuccess, setEnterSuccess] = useState<boolean>(false);
   const [room, setRoom] = useState<Room>();
-  // FIXME: localStorage를 사용하는 로직 삭제하기.
-  const [member, setLocalMember] = useLocalStorage<Member | null>('member', null);
+  const [localStorageMember, setLocalStorageMember] = useLocalStorage<Member | null>('member', null);
+
   const setMember = useMemberStore(state => state.setMember);
+  const setSocket = useSocketStore(state => state.setSocket);
 
   const router = useRouter();
   const { id: roomId } = router.query;
 
-  // TODO: handler type 정의하기.
+  // 페이지 접속 후 room 접속 로직
   useEffect(() => {
     if (!socket || !roomId) return;
+    if (!localStorageMember) router.push(`/login?id=${roomId}`);
+
+    setSocket(socket);
+
+    socket.emit('join-request', {
+      roomId: roomId,
+      memberId: localStorageMember?.id,
+    });
 
     const handleFailure = (res: JoinFailureRes) => {
       console.log('✅ handleFailure', res);
-      setEnterSuccess(res.success);
 
-      // member 정보가 없을 경우 비회원 로그인 페이지로 이동하기
-      if (roomId && !member) router.push(`/login?id=${roomId}`);
-    };
-
-    const handleMemberConnected = (res: any) => {
-      console.log('✅ handleMemberConnected', res);
-      setRoom(res.data.room);
+      console.log('에러가 발생했습니다!');
+      router.push(`/login?id=${roomId}`);
     };
 
     const handleRoomStatus = (res: any) => {
       console.log('✅ handleRoomStatus', res.data);
-      setRoom(res.data.room);
       setMember(res.data.member);
 
       // room.votes 배열의 length 가 0 이면 create-vote 이벤트 전송.
@@ -63,35 +65,62 @@ const PokerRoom = () => {
         });
       }
 
-      setEnterSuccess(true);
+      setRoom(res.data.room);
+    };
+
+    socket.on('room-status', handleRoomStatus);
+    socket.on('failure', handleFailure);
+
+    return () => {
+      socket.off('room-status', handleRoomStatus);
+      socket.off('failure', handleFailure);
+    };
+  }, [localStorageMember, roomId, router, setMember, setSocket, socket]);
+
+  // room 접속 후 투표 관련 로직
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleMemberConnected = (res: any) => {
+      console.log('✅ handleMemberConnected', res);
+      setRoom(res.data.room);
+    };
+
+    const handleMemberDisconnected = (res: any) => {
+      if (!room) return;
+      console.log('✅ handleMemberDisconnected', res);
+
+      const copyRoom = room;
+      const members = copyRoom.members.map(member => {
+        if (member.id === res.data.member.id) {
+          member.status = false;
+        }
+
+        return member;
+      });
+
+      setRoom(prevRoom => {
+        return { ...(prevRoom as Room), members };
+      });
     };
 
     const handleVoteCreated = (res: any) => {
       console.log('✅ handleVoteCreated', res);
-
       setRoom(res.data.room);
-      setEnterSuccess(true);
     };
 
-    socket.emit('join-request', {
-      roomId: member?.room,
-      memberId: member?.id,
-    });
-
-    socket.on('failure', handleFailure);
     socket.on('member-connected', handleMemberConnected);
-    socket.on('room-status', handleRoomStatus);
+    socket.on('member-disconnected', handleMemberDisconnected);
     socket.on('vote-created', handleVoteCreated);
 
     return () => {
-      socket.off('failure', handleFailure);
       socket.off('member-connected', handleMemberConnected);
-      socket.off('room-status', handleRoomStatus);
+      socket.off('member-disconnected', handleMemberDisconnected);
       socket.off('vote-created', handleVoteCreated);
     };
-  }, [socket, roomId, member, setMember, router]);
+  }, [room, socket]);
 
-  if (!isEnterSuccess || !room) return <div className="text-center">loading...</div>;
+  if (!room) return <div className="text-center">loading...</div>;
 
   return <PlayRoom room={room} />;
 };
