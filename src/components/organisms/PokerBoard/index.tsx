@@ -15,19 +15,19 @@ export const PokerBoard = ({ pokerCards, optionCards, vote }: PokerBoardProps) =
   const socket = useSocketStore(state => state.socket);
   const member = useMemberStore(state => state.member);
 
-  const [selectedCard, setSelectedCard] = useState<SelectedCard | null>(null);
+  const [selectedCard, setSelectedCard] = useState<{ type: CardType; content: CardContent } | null>(null);
 
-  const isSelectedCard = (value: CardContent) => {
-    return selectedCard?.content === value;
+  const isSelectedCard = (type: CardType, content: CardContent) => {
+    return selectedCard?.type === type && selectedCard.content === content;
   };
 
   const handleCardClick = (type: CardType, content: CardContent) => {
-    if (!socket) return;
+    if (!socket || !member) return;
 
     socket.emit('submit-card', {
       roomId: vote.room,
       voteId: vote.id,
-      memberId: member?.id,
+      memberId: member.id,
       card: {
         type,
         content,
@@ -39,14 +39,14 @@ export const PokerBoard = ({ pokerCards, optionCards, vote }: PokerBoardProps) =
     if (!vote || !member) return;
 
     // 현재 vote에서 투표한 이력이 있으면 카드 상태 초기화하기.
-    vote.cards.map(card => {
-      if (card.member === member.id) {
-        return setSelectedCard({
-          type: card.type,
-          content: card.content,
-        });
-      }
-    });
+    const submittedCard = vote.cards?.[member.id];
+
+    if (submittedCard) {
+      setSelectedCard({
+        type: submittedCard.type,
+        content: submittedCard.content,
+      });
+    }
   }, [member, vote]);
 
   return (
@@ -63,24 +63,11 @@ export const PokerBoard = ({ pokerCards, optionCards, vote }: PokerBoardProps) =
               content={cardContent}
               key={cardContent}
               isPokerBoard={true}
-              className={isSelectedCard(cardContent) ? '!-translate-y-4' : ''}
+              className={isSelectedCard('cost-type', cardContent) ? '!-translate-y-4' : ''}
               onClick={() => handleCardClick('cost-type', cardContent)}
             />
           ))}
         </div>
-        {/* mock-not-cost-type cards */}
-        {/* <div className="flex space-x-4 mt-6">
-          {optionCards.map(option => (
-            <MockCard
-              cardType="not-cost-type"
-              content={option.name}
-              key={option.name}
-              isPokerBoard={true}
-              className={isSelectedCard(option.name) ? '!-translate-y-4' : ''}
-              onClick={() => handleCardClick('not-cost-type', option.name)}
-            />
-          ))}
-        </div> */}
       </div>
     </div>
   );
