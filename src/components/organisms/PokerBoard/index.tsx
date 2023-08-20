@@ -4,6 +4,7 @@ import { Paragraph } from '@/components/atoms/Paragraph';
 import { MockCard } from '@/components/atoms/Card';
 import useMemberStore from '@/store/useMemberStore';
 import useSocketStore from '@/store/useSocketStore';
+import { CARD_TYPE_COST } from '@/constants/common';
 
 type PokerBoardProps = {
   pokerCards: string[];
@@ -15,13 +16,13 @@ export const PokerBoard = ({ pokerCards, optionCards, vote }: PokerBoardProps) =
   const socket = useSocketStore(state => state.socket);
   const member = useMemberStore(state => state.member);
 
-  const [selectedCard, setSelectedCard] = useState<{ type: CardType; content: CardContent } | null>(null);
+  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
 
-  const isSelectedCard = (type: CardType, content: CardContent) => {
-    return selectedCard?.type === type && selectedCard.content === content;
+  const isSelectedCard = ({ type, content }: Card): string | undefined => {
+    return selectedCard?.type === type && selectedCard.content === content ? '-translate-y-4' : undefined;
   };
 
-  const handleCardClick = (type: CardType, content: CardContent) => {
+  const handleCardClick = ({ type, content }: Card) => {
     if (!socket || !member) return;
 
     socket.emit('submit-card', {
@@ -59,12 +60,22 @@ export const PokerBoard = ({ pokerCards, optionCards, vote }: PokerBoardProps) =
         <div className="flex space-x-4">
           {pokerCards.map(cardContent => (
             <MockCard
-              cardType="cost-type"
+              cardType={CARD_TYPE_COST}
               content={cardContent}
               key={cardContent}
               isPokerBoard={true}
-              className={isSelectedCard('cost-type', cardContent) ? '!-translate-y-4' : ''}
-              onClick={() => handleCardClick('cost-type', cardContent)}
+              className={
+                isSelectedCard({
+                  type: CARD_TYPE_COST,
+                  content: cardContent,
+                }) ?? ''
+              }
+              onClick={() =>
+                handleCardClick({
+                  type: CARD_TYPE_COST,
+                  content: cardContent,
+                })
+              }
             />
           ))}
         </div>
