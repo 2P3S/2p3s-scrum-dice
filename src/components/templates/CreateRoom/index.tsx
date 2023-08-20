@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import { Button } from '@/components/atoms/button';
-import { Input } from '@/components/atoms/input';
-import { Title } from '@/components/atoms/title';
-import { Paragraph } from '@/components/atoms/paragraph';
+import { Button } from '@/components/atoms/Button';
+import { Input } from '@/components/atoms/Input';
+import { Title } from '@/components/atoms/Title';
+import { Paragraph } from '@/components/atoms/Paragraph';
 
 import { DeckCardGroup, OptionCardGroup } from '@/components/organisms/CardGroup';
 import { FIBONACCI_NUMBERS, MODIFIED_FIBONACCI_NUMBERS, NOT_COST_CONTENTS } from '@/constants/common';
