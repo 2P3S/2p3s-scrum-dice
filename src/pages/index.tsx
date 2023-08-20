@@ -1,4 +1,4 @@
-import { Paragraph } from '@/components/atoms/Paragraph';
+import { Paragraph } from '@/components/atoms/paragraph';
 import Head from 'next/head';
 import Link from 'next/link';
 
@@ -6,7 +6,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 
 export default function Home() {
-  const { t } = useTranslation('common');
+  const translate = useTranslation(['common', 'createroom']).t;
 
   return (
     <>
@@ -18,10 +18,10 @@ export default function Home() {
       </Head>
       <main className="m-4">
         <Paragraph size="large">
-          <Link href="/login">{ t('게스트로_로그인하기') }</Link>
+          <Link href="/login">{ translate('common:게스트로_로그인하기') }</Link>
         </Paragraph>
         <Paragraph size="large">
-          <Link href="/room">{ t('플래닝_포커_방_생성하기') }</Link>
+          <Link href="/room">{ translate('common:플래닝_포커_방_생성하기') }</Link>
         </Paragraph>
       </main>
     </>
