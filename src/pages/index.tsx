@@ -2,7 +2,12 @@ import { Paragraph } from '@/components/atoms/Paragraph';
 import Head from 'next/head';
 import Link from 'next/link';
 
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
+
 export default function Home() {
+  const translate = useTranslation(['common', 'createroom']).t;
+
   return (
     <>
       <Head>
@@ -13,12 +18,18 @@ export default function Home() {
       </Head>
       <main className="m-4">
         <Paragraph size="large">
-          <Link href="/login">👀 게스트로 로그인하기</Link>
+          <Link href="/login">{ translate('common:게스트로_로그인하기') }</Link>
         </Paragraph>
         <Paragraph size="large">
-          <Link href="/room">🎉 플래닝 포커 방 생성하기</Link>
+          <Link href="/room">{ translate('common:플래닝_포커_방_생성하기') }</Link>
         </Paragraph>
       </main>
     </>
   );
 }
+
+export const getStaticProps = async ({ locale }: any) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common', 'createroom'])),
+  },
+});
