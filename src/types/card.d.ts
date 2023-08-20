@@ -2,12 +2,8 @@
  * room 생성 후 사용되는 카드
  */
 type Card = {
-  vote: string | Vote;
-  member: string | Member;
   type: CardType;
   content: CardContent;
-  // 투표 여부를 나타내는 상태 값
-  status: boolean;
 };
 
 /**

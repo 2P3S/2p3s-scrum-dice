@@ -31,10 +31,7 @@ const getCardStyle = (type: CardType, content: CardContent, vote?: Vote, isPoker
 };
 
 type CardProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  card: {
-    content: CardContent;
-    type: CardType;
-  };
+  card: Card;
   vote: Vote;
   isMe: boolean;
 };
@@ -64,7 +61,9 @@ type MockCardProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 export const TempCard = () => {
-  return <div className="btn no-animation w-20 h-[92px] font-lato text-black bg-white hover:bg-white" />;
+  return (
+    <div className="btn no-animation w-20 h-[92px] font-lato text-black bg-white hover:cursor-default hover:bg-white" />
+  );
 };
 
 export const MockCard = ({ className, cardType, content, isPokerBoard, ...props }: MockCardProps) => {

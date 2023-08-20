@@ -25,3 +25,5 @@ export const OPTION_CARDS: OptionCard[] = [
     class: 'bg-red-600 hover:bg-red-600 text-white font-extrabold',
   },
 ];
+
+export const CARD_TYPE_COST = 'cost-type'
