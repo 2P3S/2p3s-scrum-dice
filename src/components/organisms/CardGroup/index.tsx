@@ -7,12 +7,12 @@ export type DeckCardGroupProps = DeckCardGroup & {
 };
 
 export const DeckCardGroup = (props: DeckCardGroupProps) => {
-  const selectedWrapperStyle = props.isSelected ? 'bg-blue-800 bg-opacity-20 shadow-md' : '';
+  const selectedWrapperStyle = props.isSelected ? 'bg-blue-800 bg-opacity-20' : 'bg-gray-100';
 
   return (
     <div
       className={classnames(
-        'p-3 rounded-md grid grid-cols-5 gap-2 place-items-center hover:border hover:border-blue-700',
+        'w-full flex flex-wrap gap-2 justify-start px-3 py-4 rounded-md hover:border shadow-md hover:border-blue-700',
         selectedWrapperStyle,
       )}
       onClick={() => props.setDeckType(props.deckType)}
