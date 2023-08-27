@@ -31,9 +31,9 @@ export const PokerVoting = ({ room, vote }: PokerVotingProps) => {
           const cardData = vote.cards?.[memberData.id];
 
           return (
-            <div className="flex flex-col" key={memberData.id}>
+            <div className="flex flex-col w-20" key={memberData.id}>
               {cardData ? <Card card={cardData} vote={vote} isMe={memberData.id === member?.id} /> : <TempCard />}
-              <Paragraph size="small" className="mt-2">
+              <Paragraph size="small" className="mt-2 truncate">
                 {memberData.name}
               </Paragraph>
             </div>
