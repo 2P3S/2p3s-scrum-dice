@@ -1,5 +1,5 @@
 type Vote = {
-  cards: Card[];
+  cards: Record<Member['id'], Card> | null;
   created_at: string;
   id: string;
   name: string;

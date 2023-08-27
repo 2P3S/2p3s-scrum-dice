@@ -4,6 +4,8 @@ import type { AppProps } from 'next/app';
 import '@/styles/globals.css';
 import { Header } from '@/components/templates/Header';
 
+import { appWithTranslation } from 'next-i18next';
+
 const notoSansKr = Noto_Sans_KR({
   // preload: true, 기본값
   subsets: ['latin'], // 또는 preload: false
@@ -15,7 +17,7 @@ const lato = Lato({
   weight: ['100', '300', '400', '700', '900'],
 });
 
-export default function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <style jsx global>
@@ -31,3 +33,5 @@ export default function App({ Component, pageProps }: AppProps) {
     </>
   );
 }
+
+export default appWithTranslation(App);

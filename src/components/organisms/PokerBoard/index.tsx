@@ -4,6 +4,7 @@ import { Paragraph } from '@/components/atoms/Paragraph';
 import { MockCard } from '@/components/atoms/Card';
 import useMemberStore from '@/store/useMemberStore';
 import useSocketStore from '@/store/useSocketStore';
+import { CARD_TYPE_COST } from '@/constants/common';
 
 type PokerBoardProps = {
   pokerCards: string[];
@@ -15,19 +16,19 @@ export const PokerBoard = ({ pokerCards, optionCards, vote }: PokerBoardProps) =
   const socket = useSocketStore(state => state.socket);
   const member = useMemberStore(state => state.member);
 
-  const [selectedCard, setSelectedCard] = useState<SelectedCard | null>(null);
+  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
 
-  const isSelectedCard = (value: CardContent) => {
-    return selectedCard?.content === value;
+  const isSelectedCard = ({ type, content }: Card): string | undefined => {
+    return selectedCard?.type === type && selectedCard.content === content ? '-translate-y-4' : undefined;
   };
 
-  const handleCardClick = (type: CardType, content: CardContent) => {
-    if (!socket) return;
+  const handleCardClick = ({ type, content }: Card) => {
+    if (!socket || !member) return;
 
     socket.emit('submit-card', {
       roomId: vote.room,
       voteId: vote.id,
-      memberId: member?.id,
+      memberId: member.id,
       card: {
         type,
         content,
@@ -39,14 +40,14 @@ export const PokerBoard = ({ pokerCards, optionCards, vote }: PokerBoardProps) =
     if (!vote || !member) return;
 
     // 현재 vote에서 투표한 이력이 있으면 카드 상태 초기화하기.
-    vote.cards.map(card => {
-      if (card.member === member.id) {
-        return setSelectedCard({
-          type: card.type,
-          content: card.content,
-        });
-      }
-    });
+    const submittedCard = vote.cards?.[member.id];
+
+    if (submittedCard) {
+      setSelectedCard({
+        type: submittedCard.type,
+        content: submittedCard.content,
+      });
+    }
   }, [member, vote]);
 
   return (
@@ -59,28 +60,25 @@ export const PokerBoard = ({ pokerCards, optionCards, vote }: PokerBoardProps) =
         <div className="flex space-x-4">
           {pokerCards.map(cardContent => (
             <MockCard
-              cardType="cost-type"
+              cardType={CARD_TYPE_COST}
               content={cardContent}
               key={cardContent}
               isPokerBoard={true}
-              className={isSelectedCard(cardContent) ? '!-translate-y-4' : ''}
-              onClick={() => handleCardClick('cost-type', cardContent)}
+              className={
+                isSelectedCard({
+                  type: CARD_TYPE_COST,
+                  content: cardContent,
+                }) ?? ''
+              }
+              onClick={() =>
+                handleCardClick({
+                  type: CARD_TYPE_COST,
+                  content: cardContent,
+                })
+              }
             />
           ))}
         </div>
-        {/* mock-not-cost-type cards */}
-        {/* <div className="flex space-x-4 mt-6">
-          {optionCards.map(option => (
-            <MockCard
-              cardType="not-cost-type"
-              content={option.name}
-              key={option.name}
-              isPokerBoard={true}
-              className={isSelectedCard(option.name) ? '!-translate-y-4' : ''}
-              onClick={() => handleCardClick('not-cost-type', option.name)}
-            />
-          ))}
-        </div> */}
       </div>
     </div>
   );
