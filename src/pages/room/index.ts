@@ -1,3 +1,5 @@
+import CreateRoom from "@/components/templates/CreateRoom";
+
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export const getStaticProps = async ({ locale }: any) => ({
@@ -6,4 +8,4 @@ export const getStaticProps = async ({ locale }: any) => ({
   },
 });
 
-export { default } from './create';
+export default CreateRoom

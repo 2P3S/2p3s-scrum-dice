@@ -39,7 +39,7 @@ export const GuestLogin = ({ roomId }: GuestLoginProps) => {
   };
 
   return (
-    <div className="px-16 py-5 space-y-10">
+    <div className="max-w-5xl mx-auto py-16 px-5 space-y-10">
       <Title headingLevel="h3" emoji="👀" className="font-bold">
         게스트로 로그인하기
       </Title>
