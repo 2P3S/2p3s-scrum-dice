@@ -1,6 +1,9 @@
 import { LinkButton } from '@/components/atoms/Button';
+import { useTranslation } from 'next-i18next';
 
 export const Main = () => {
+  const translate = useTranslation(['common']).t;
+
   return (
     <main className="m-auto max-w-2xl pt-32 text-center">
       <div>
