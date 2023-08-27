@@ -57,7 +57,7 @@ export const PokerBoard = ({ pokerCards, optionCards, vote }: PokerBoardProps) =
       </Paragraph>
       <div className="mt-5">
         {/* mock-cost-type cards */}
-        <div className="flex space-x-4">
+        <div className="flex flex-wrap gap-x-3 gap-y-5">
           {pokerCards.map(cardContent => (
             <MockCard
               cardType={CARD_TYPE_COST}
