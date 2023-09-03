@@ -6,6 +6,7 @@ import useLocalStorage from '@/hooks/useLocalStorage';
 import { PlayRoom } from '@/components/templates/PlayRoom';
 import useMemberStore from '@/store/useMemberStore';
 import useSocketStore from '@/store/useSocketStore';
+import useToastStore from '@/store/useToastStore';
 
 type JoinSuccessRes = {
   data: {
@@ -28,6 +29,7 @@ const PokerRoom = () => {
 
   const setMember = useMemberStore(state => state.setMember);
   const setSocket = useSocketStore(state => state.setSocket);
+  const setToastMsgs = useToastStore(state => state.setToastMsgs);
 
   const router = useRouter();
   const { id: roomId } = router.query;
@@ -45,19 +47,15 @@ const PokerRoom = () => {
     });
 
     const handleFailure = (res: JoinFailureRes) => {
-      console.log('✅ handleFailure', res);
-
-      console.log('에러가 발생했습니다!');
+      setToastMsgs(res.message)
       router.push(`/login?id=${roomId}`);
     };
 
     const handleRoomStatus = (res: any) => {
-      console.log('✅ handleRoomStatus', res.data);
       setMember(res.data.member);
 
       // room.votes 배열의 length 가 0 이면 create-vote 이벤트 전송.
       if (res.data.room.votes.length === 0) {
-        console.log('회차 정보가 없기에 1회차를 생성합니다.');
         return socket.emit('create-vote', {
           roomId: res.data.room.id,
           memberId: res.data.member.id,
@@ -75,20 +73,20 @@ const PokerRoom = () => {
       socket.off('room-status', handleRoomStatus);
       socket.off('failure', handleFailure);
     };
-  }, [localStorageMember, roomId, router, setMember, setSocket, socket]);
+  }, [localStorageMember, roomId, router, setMember, setSocket, socket, setToastMsgs]);
 
   // room 접속 후 투표 관련 로직
   useEffect(() => {
     if (!socket) return;
 
     const handleMemberConnected = (res: any) => {
-      console.log('✅ handleMemberConnected', res);
+      setToastMsgs(`${res.data.member.name} ${res.message}`)
       setRoom(res.data.room);
     };
 
     const handleMemberDisconnected = (res: any) => {
       if (!room) return;
-      console.log('✅ handleMemberDisconnected', res);
+      setToastMsgs(`${res.data.member.name} ${res.message}`);
 
       const copyRoom = room;
       const members = copyRoom.members.map(member => {
@@ -105,7 +103,7 @@ const PokerRoom = () => {
     };
 
     const handleVoteCreated = (res: any) => {
-      console.log('✅ handleVoteCreated', res);
+      setToastMsgs(`${res.data.vote.name} ${res.message}`)
       setRoom(res.data.room);
     };
 
@@ -118,7 +116,7 @@ const PokerRoom = () => {
       socket.off('member-disconnected', handleMemberDisconnected);
       socket.off('vote-created', handleVoteCreated);
     };
-  }, [room, socket]);
+  }, [room, socket, setToastMsgs]);
 
   if (!room) return <div className="text-center">loading...</div>;
 
