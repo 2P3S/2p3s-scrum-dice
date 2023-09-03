@@ -5,6 +5,7 @@ import '@/styles/globals.css';
 import { Header } from '@/components/templates/Header';
 
 import { appWithTranslation } from 'next-i18next';
+import Toast from '@/components/atoms/Toast';
 
 const notoSansKr = Noto_Sans_KR({
   // preload: true, 기본값
@@ -29,6 +30,7 @@ function App({ Component, pageProps }: AppProps) {
         `}
       </style>
       <Header />
+      <Toast />
       <Component {...pageProps} />
     </>
   );
