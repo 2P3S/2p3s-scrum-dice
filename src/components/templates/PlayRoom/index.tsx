@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import useSocketStore from '@/store/useSocketStore';
+import useToastStore from '@/store/useToastStore';
 
 import { PokerDetail } from '@/components/organisms/PokerDetail';
 import { PokerBoard } from '@/components/organisms/PokerBoard';
@@ -13,21 +14,27 @@ type PlayRoomProps = {
 
 export const PlayRoom = ({ room }: PlayRoomProps) => {
   const socket = useSocketStore(state => state.socket);
+  const setToastMsgs = useToastStore(state => state.setToastMsgs);
   const [vote, setVote] = useState<Vote>(room.votes[room.votes.length - 1]);
 
   const pokerCards = room.deck === 'FIBONACCI_NUMBERS' ? FIBONACCI_NUMBERS : MODIFIED_FIBONACCI_NUMBERS;
   const optionCards = OPTION_CARDS.filter(optionCard => optionCard.name !== 'break');
 
-  const handleCardSubmitted = (res: any) => {
-    console.log('card-submitted', res);
+  const handleCardSubmitted = useCallback(
+    (res: any) => {
+      setToastMsgs(`${res.data.member.name} 님의 ${res.message}`);
+      setVote(res.data.vote);
+    },
+    [setToastMsgs],
+  );
 
-    setVote(res.data.vote);
-  };
-
-  const handleCardOpened = (res: any) => {
-    console.log('card-opened', res);
-    setVote(res.data.vote);
-  };
+  const handleCardOpened = useCallback(
+    (res: any) => {
+      setToastMsgs(res.message);
+      setVote(res.data.vote);
+    },
+    [setToastMsgs],
+  );
 
   useEffect(() => {
     setVote(room.votes[room.votes.length - 1]);
@@ -43,7 +50,7 @@ export const PlayRoom = ({ room }: PlayRoomProps) => {
       socket.off('card-submitted', handleCardSubmitted);
       socket.off('card-opened', handleCardOpened);
     };
-  }, [socket]);
+  }, [socket, setToastMsgs, handleCardOpened, handleCardSubmitted]);
 
   return (
     <div className="space-y-4 max-w-6xl mx-auto px-5">
