@@ -7,6 +7,7 @@ import { Input } from '@/components/atoms/Input';
 
 import { fetchEnterRoom } from '@/utils/http/room';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import { useTranslation } from 'next-i18next';
 
 type GuestLoginProps = {
   roomId: string;
@@ -17,6 +18,7 @@ export const GuestLogin = ({ roomId }: GuestLoginProps) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [member, setMember] = useLocalStorage('member', {});
   const router = useRouter();
+  const translate = useTranslation(['login']).t;
 
   const handleUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(event.target.value);
@@ -27,7 +29,7 @@ export const GuestLogin = ({ roomId }: GuestLoginProps) => {
   };
 
   const handleGuestLogin = async () => {
-    if (!isChecked) return alert('이용약관 및 개인정보취급방침에 동의를 클릭해주세요.');
+    if (!isChecked) return alert(translate('login:이용약관_및_개인정보취급방침에_동의를_클릭해주세요'));
     try {
       const res = await fetchEnterRoom(roomId as string, userName);
       setMember(res);
@@ -41,10 +43,10 @@ export const GuestLogin = ({ roomId }: GuestLoginProps) => {
   return (
     <div className="max-w-5xl mx-auto py-16 px-5 space-y-10">
       <Title headingLevel="h3" emoji="👀" className="font-bold">
-        게스트로 로그인하기
+        {translate('login:게스트로_로그인하기')}
       </Title>
       <Input
-        placeholder="😁 게스트 이름을 입력해주세요"
+        placeholder={translate('login:게스트_이름을_입력해주세요')}
         className="w-full"
         value={userName}
         onChange={handleUserNameChange}
@@ -52,11 +54,11 @@ export const GuestLogin = ({ roomId }: GuestLoginProps) => {
       <div className="flex">
         <label className="label cursor-pointer">
           <input type="checkbox" checked={isChecked} onChange={handleCheckChange} className="checkbox" />
-          <span className="label-text ml-3">이용약관 및 개인정보취급방침에 동의</span>
+          <span className="label-text ml-3">{translate('login:이용약관_및_개인정보취급방침에_동의')}</span>
         </label>
       </div>
       <Button className="rounded-3xl w-full" onClick={handleGuestLogin}>
-        로그인
+        {translate('login:로그인')}
       </Button>
     </div>
   );

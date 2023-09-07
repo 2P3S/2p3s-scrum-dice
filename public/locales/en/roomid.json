@@ -1,3 +1,6 @@
 {
-  "카드를_선택해주세요": "Select Card"
+  "카드를_선택해주세요": "Select Card",
+  "n회차": "{{numberForTranslate}} session",
+  "다음회차로_넘어가기": "Go to next round",
+  "결과보기": "View results"
 }

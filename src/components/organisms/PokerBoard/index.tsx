@@ -5,6 +5,7 @@ import { MockCard } from '@/components/atoms/Card';
 import useMemberStore from '@/store/useMemberStore';
 import useSocketStore from '@/store/useSocketStore';
 import { CARD_TYPE_COST } from '@/constants/common';
+import { useTranslation } from 'next-i18next';
 
 type PokerBoardProps = {
   pokerCards: string[];
@@ -15,6 +16,7 @@ type PokerBoardProps = {
 export const PokerBoard = ({ pokerCards, optionCards, vote }: PokerBoardProps) => {
   const socket = useSocketStore(state => state.socket);
   const member = useMemberStore(state => state.member);
+  const translate = useTranslation(['roomid']).t;
 
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
 
@@ -53,7 +55,7 @@ export const PokerBoard = ({ pokerCards, optionCards, vote }: PokerBoardProps) =
   return (
     <div>
       <Paragraph size="large" className="font-bold">
-        카드를 선택해주세요
+        {translate('roomid:카드를_선택해주세요')}
       </Paragraph>
       <div className="mt-5">
         {/* mock-cost-type cards */}

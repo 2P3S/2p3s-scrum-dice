@@ -6,6 +6,8 @@ import clipboardCopy from 'clipboard-copy';
 import useSocketStore from '@/store/useSocketStore';
 import useMemberStore from '@/store/useMemberStore';
 
+import { useTranslation } from 'next-i18next';
+
 type PokerDetailProps = {
   room: Room;
   vote: Vote;
@@ -15,13 +17,16 @@ export const PokerDetail = ({ room, vote }: PokerDetailProps) => {
   const socket = useSocketStore(state => state.socket);
   const member = useMemberStore(state => state.member);
 
+  const translate = useTranslation(['roomid']).t;
+
   const handleResetCard = () => {
     const currentVoteNumber = room.votes.length;
+    const numberForTranslate = currentVoteNumber + 1;
 
     socket?.emit('create-vote', {
       roomId: room.id,
       memberId: member?.id,
-      voteName: `${currentVoteNumber + 1}회차`,
+      voteName: translate('roomid:n회차', {numberForTranslate}),
     });
   };
   const handleOpenCard = () => {
@@ -58,10 +63,10 @@ export const PokerDetail = ({ room, vote }: PokerDetailProps) => {
         </CountDownButton> */}
         {vote.status ? (
           <Button className="bg-black text-white" onClick={handleResetCard}>
-            다음회차로 넘어가기
+            {translate('roomid:다음회차로_넘어가기')}
           </Button>
         ) : (
-          <Button onClick={handleOpenCard}>결과보기</Button>
+          <Button onClick={handleOpenCard}>{translate('roomid:결과보기')}</Button>
         )}
       </div>
     </div>

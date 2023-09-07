@@ -14,7 +14,7 @@ import { fetchCreateRoom } from '@/utils/http/room';
 import { useTranslation } from 'next-i18next';
 
 export const CreateRoom = () => {
-  const translate = useTranslation(['common', 'createroom']).t;
+  const translate = useTranslation(['createroom']).t;
   const router = useRouter();
 
   const [roomName, setRoomName] = useState<string>('');
