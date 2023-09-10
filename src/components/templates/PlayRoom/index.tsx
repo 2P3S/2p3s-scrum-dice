@@ -25,7 +25,7 @@ export const PlayRoom = ({ room }: PlayRoomProps) => {
 
   const handleCardSubmitted = useCallback(
     (res: any) => {
-      setToastMsgs(`${res.data.member.name} ${translate('rooid:님의')} ${translate(res.message)}`);
+      setToastMsgs(`${res.data.member.name} ${translate('roomid:님의')} ${translate(res.message)}`);
       setVote(res.data.vote);
     },
     [setToastMsgs,translate],
