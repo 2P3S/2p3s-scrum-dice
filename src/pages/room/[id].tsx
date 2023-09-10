@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import useSocket from '@/hooks/useSocket';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
@@ -63,7 +64,7 @@ const PokerRoom = () => {
     });
 
     const handleFailure = (res: JoinFailureRes) => {
-      setToastMsgs(res.message)
+      setToastMsgs(translate(res.message))
       router.push(`/login?id=${roomId}`);
     };
 
@@ -97,13 +98,13 @@ const PokerRoom = () => {
     if (!socket) return;
 
     const handleMemberConnected = (res: any) => {
-      setToastMsgs(`${res.data.member.name} ${res.message}`)
+      setToastMsgs(`${res.data.member.name} ${translate(res.message)}`)
       setRoom(res.data.room);
     };
 
     const handleMemberDisconnected = (res: any) => {
       if (!room) return;
-      setToastMsgs(`${res.data.member.name} ${res.message}`);
+      setToastMsgs(`${res.data.member.name} ${translate(res.message)}`);
 
       const copyRoom = room;
       const members = copyRoom.members.map(member => {
@@ -120,7 +121,7 @@ const PokerRoom = () => {
     };
 
     const handleVoteCreated = (res: any) => {
-      setToastMsgs(`${res.data.vote.name} ${res.message}`)
+      setToastMsgs(`${res.data.vote.name} ${translate(res.message)}`)
       setRoom(res.data.room);
     };
 
@@ -133,11 +134,18 @@ const PokerRoom = () => {
       socket.off('member-disconnected', handleMemberDisconnected);
       socket.off('vote-created', handleVoteCreated);
     };
-  }, [room, socket, setToastMsgs]);
+  }, [room, socket, setToastMsgs, translate]);
 
   if (!room) return <div className="text-center">loading...</div>;
 
-  return <PlayRoom room={room} />;
+  return (
+    <>
+      <Head>
+        <title>【Scrum Dice】 Play Room</title>
+      </Head>
+      <PlayRoom room={room} />
+    </>
+  );
 };
 
 export default PokerRoom;

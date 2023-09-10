@@ -3,6 +3,7 @@ import { GuestLogin } from '@/components/templates/Login';
 import { useEffect } from 'react';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import Head from 'next/head';
 
 export default function Login() {
   const router = useRouter();
@@ -15,7 +16,14 @@ export default function Login() {
 
   if (!roomId) return <div className="text-center">{translate('login:잘못된_접근입니다_roomId를_확인해주세요')}</div>;
 
-  return <GuestLogin roomId={roomId as string} />;
+  return (
+    <>
+      <Head>
+        <title>【Scrum Dice】 Login</title>
+      </Head>
+      <GuestLogin roomId={roomId as string} />
+    </>
+  );
 }
 
 export const getStaticProps = async ({ locale }: any) => ({

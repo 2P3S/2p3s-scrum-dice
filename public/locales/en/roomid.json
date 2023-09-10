@@ -2,5 +2,21 @@
   "카드를_선택해주세요": "Select Card",
   "n회차": "{{numberForTranslate}} session",
   "다음회차로_넘어가기": "Go to next round",
-  "결과보기": "View results"
+  "결과보기": "View results",
+
+  "님의": "'s",
+  "카드가 제출되었습니다.": "Card has been submitted.",
+  "카드가 공개되었습니다.": "Card has been released.",
+  "사용자가 입장했습니다.": "User has entered.",
+  "사용자가 나갔습니다.": "User has left",
+  "투표가 생성되었습니다.": "vote has been created.",
+
+  "투표 생성에 실패했습니다.": "Failed to create vote.",
+  "투표 이름 변경에 실패했습니다.": "Failed to rename vote.",
+  "유효하지 않은 카드가 제출되었습니다.": "An invalid card has been submitted.",
+  "투표를 찾을 수 없습니다.": "No votes found.",
+  "카드 제출에 실패했습니다.": "Card submission failed.",
+  "방에 속하지 않은 사용자입니다.": "This user is not in the room.",
+  "존재하지 않는 방입니다.": "This room doesn't exist.",
+  "존재하지 않는 사용자입니다.": "User does not exist."
 }

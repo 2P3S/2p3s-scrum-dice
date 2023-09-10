@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Scrum Dice</title>
+        <title>【Scrum Dice】</title>
       </Head>
       <Main />
     </>
