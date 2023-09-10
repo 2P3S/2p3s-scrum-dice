@@ -5,7 +5,7 @@ import { CreateRoom as CreateRoomTemplate } from "@/components/templates/CreateR
 
 export const getStaticProps = async ({ locale }: any) => ({
   props: {
-    ...(await serverSideTranslations(locale, ['common', 'createroom'])),
+    ...(await serverSideTranslations(locale, ['createroom'])),
   },
 });
 

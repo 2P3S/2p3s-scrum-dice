@@ -1,0 +1,9 @@
+{
+  "플래닝_포커_방_생성하기": "Create planning poker room",
+  "방_이름을_입력해주세요": "Type room name",
+  "기본_카드_묶음을_선택해주세요": "Select default card type",
+  "옵션_카드를_사용해봐요": "Use option card",
+  "생성하기": "Create",
+  "방_입장에_실패하였습니다": "Failed to connect room {{e}}",
+  "덱_카드를_선택해주세요": "Select deck card"
+}

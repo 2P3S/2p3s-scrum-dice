@@ -14,7 +14,7 @@ import { fetchCreateRoom } from '@/utils/http/room';
 import { useTranslation } from 'next-i18next';
 
 export const CreateRoom = () => {
-  const translate = useTranslation(['common', 'createroom']).t;
+  const translate = useTranslation(['createroom']).t;
   const router = useRouter();
 
   const [roomName, setRoomName] = useState<string>('');
@@ -49,7 +49,7 @@ export const CreateRoom = () => {
       const { id } = await fetchCreateRoom(roomName, deckType);
       router.push(`/login?id=${id}`);
     } catch (e) {
-      alert(translate('createroom:방_입장에_실패하였습니다', `${e}`));
+      alert(translate('createroom:방_입장에_실패하였습니다', {e}));
     }
   };
 

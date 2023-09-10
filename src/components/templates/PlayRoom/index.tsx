@@ -7,6 +7,7 @@ import { PokerBoard } from '@/components/organisms/PokerBoard';
 import { PokerVoting } from '@/components/organisms/PokerVoting';
 
 import { FIBONACCI_NUMBERS, MODIFIED_FIBONACCI_NUMBERS, OPTION_CARDS } from '@/constants/common';
+import { useTranslation } from 'next-i18next';
 
 type PlayRoomProps = {
   room: Room;
@@ -17,23 +18,25 @@ export const PlayRoom = ({ room }: PlayRoomProps) => {
   const setToastMsgs = useToastStore(state => state.setToastMsgs);
   const [vote, setVote] = useState<Vote>(room.votes[room.votes.length - 1]);
 
+  const translate = useTranslation(['roomid']).t;
+
   const pokerCards = room.deck === 'FIBONACCI_NUMBERS' ? FIBONACCI_NUMBERS : MODIFIED_FIBONACCI_NUMBERS;
   const optionCards = OPTION_CARDS.filter(optionCard => optionCard.name !== 'break');
 
   const handleCardSubmitted = useCallback(
     (res: any) => {
-      setToastMsgs(`${res.data.member.name} 님의 ${res.message}`);
+      setToastMsgs(`${res.data.member.name} ${translate('roomid:님의')} ${translate(res.message)}`);
       setVote(res.data.vote);
     },
-    [setToastMsgs],
+    [setToastMsgs,translate],
   );
 
   const handleCardOpened = useCallback(
     (res: any) => {
-      setToastMsgs(res.message);
+      setToastMsgs(translate(res.message));
       setVote(res.data.vote);
     },
-    [setToastMsgs],
+    [setToastMsgs, translate],
   );
 
   useEffect(() => {
