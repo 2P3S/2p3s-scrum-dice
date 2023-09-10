@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import useSocket from '@/hooks/useSocket';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
@@ -120,7 +121,14 @@ const PokerRoom = () => {
 
   if (!room) return <div className="text-center">loading...</div>;
 
-  return <PlayRoom room={room} />;
+  return (
+    <>
+      <Head>
+        <title>【Scrum Dice】 Play Room</title>
+      </Head>
+      <PlayRoom room={room} />
+    </>
+  );
 };
 
 export default PokerRoom;
