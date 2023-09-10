@@ -12,7 +12,7 @@ export const DeckCardGroup = (props: DeckCardGroupProps) => {
   return (
     <div
       className={classnames(
-        'w-full flex flex-wrap gap-2 justify-start px-3 py-4 rounded-md hover:border shadow-md hover:border-blue-700',
+        'w-full flex flex-wrap gap-2 justify-start px-2.5 py-4 rounded-md hover:border shadow-md hover:border-blue-700',
         selectedWrapperStyle,
       )}
       onClick={() => props.setDeckType(props.deckType)}
