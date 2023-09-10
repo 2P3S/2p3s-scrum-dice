@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { GuestLogin } from '@/components/templates/Login';
 import { useEffect } from 'react';
+import Head from 'next/head';
 
 export default function Login() {
   const router = useRouter();
@@ -12,5 +13,12 @@ export default function Login() {
 
   if (!roomId) return <div className="text-center">잘못된 접근입니다. roomId를 확인해주세요.</div>;
 
-  return <GuestLogin roomId={roomId as string} />;
+  return (
+    <>
+      <Head>
+        <title>【Scrum Dice】 Login</title>
+      </Head>
+      <GuestLogin roomId={roomId as string} />
+    </>
+  );
 }
