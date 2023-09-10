@@ -56,7 +56,8 @@ export const PlayRoom = ({ room }: PlayRoomProps) => {
     <div className="space-y-4 max-w-6xl mx-auto px-5">
       <PokerDetail room={room} vote={vote} />
       <PokerVoting room={room} vote={vote} />
-      <PokerBoard pokerCards={pokerCards} optionCards={optionCards} vote={vote} />
+      {/* 매 회차 투표가 끝남과 동시에 PokerBoard 를 hidden 처리한다. */}
+      {!vote.status && <PokerBoard pokerCards={pokerCards} optionCards={optionCards} vote={vote} />}
     </div>
   );
 };
