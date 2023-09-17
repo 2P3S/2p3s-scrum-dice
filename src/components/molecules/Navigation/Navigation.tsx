@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { locale } = useRouter();
+  const { locale, pathname } = useRouter();
 
   const renameLocale = (locale?: string) => {
     switch (locale) {
@@ -37,10 +37,8 @@ export const Navigation = () => {
         <li>
           <Link href="/room">Room</Link>
         </li>
-        <li>
-          <Link href="/login">Contact</Link>
-        </li>
-        <li onMouseEnter={handleMenuMouseEnter} onMouseLeave={handleMenuMouseLeave} className="relative">
+        { pathname==='/'
+        ? <li onMouseEnter={handleMenuMouseEnter} onMouseLeave={handleMenuMouseLeave} className="relative">
           <div
             className="flex space-x-2 peer"
             id="menu_button"
@@ -76,6 +74,8 @@ export const Navigation = () => {
             </li>
           </ul>
         </li>
+        : <></>
+        }
       </ul>
     </nav>
   );
